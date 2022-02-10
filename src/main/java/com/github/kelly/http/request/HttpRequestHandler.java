@@ -28,9 +28,6 @@ public class HttpRequestHandler implements Runnable{
                 InputStream inputStream = connection.getInputStream();
                 // HttpRequest 에게 요청 메세지 처리하는 것을 맡긴다.
                 HttpRequest httpRequest = new HttpRequest(inputStream);
-                System.out.println("http method = " + httpRequest.getRequestLine().getHttpMethod());
-                System.out.println("http url = " + httpRequest.getRequestLine().getUrl());
-                System.out.println("http protocol = " + httpRequest.getRequestLine().getProtocol());
 
                 OutputStream outputStream = connection.getOutputStream();
                 // 요청한 사람에게 보낼 응답을 만든다.

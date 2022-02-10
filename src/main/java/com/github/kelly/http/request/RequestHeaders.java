@@ -22,4 +22,9 @@ public class RequestHeaders {
             requestHeader.put(keyAndValue[KEY], keyAndValue[VALUE].trim());
         }
     }
+
+
+    public String getHeader(String key) {
+        return requestHeader.get(key);
+    }
 }

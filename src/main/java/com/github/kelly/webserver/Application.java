@@ -1,7 +1,5 @@
-package com.github.kelly.http;
+package com.github.kelly.webserver;
 
-
-import com.github.kelly.http.request.HttpRequestHandler;
 
 public class Application {
 

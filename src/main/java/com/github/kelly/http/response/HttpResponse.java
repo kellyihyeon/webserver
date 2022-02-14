@@ -22,8 +22,7 @@ public class HttpResponse {
         dos = new DataOutputStream(outputStream);
     }
 
-    public String makeStatusLine() {
-        // dos.writeBytes("HTTP/1.1 200 OK\r\n");
+    private String makeStatusLine() {
         return String.format("HTTP/1.1 %d %s\r\n", httpStatus.getStatusCode(), httpStatus.getStatusText());
     }
 

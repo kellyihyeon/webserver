@@ -18,6 +18,8 @@ import java.net.Socket;
  */
 public class HttpRequestHandler implements Runnable{
 
+    // dispatcher 에게 request 를 주면서 request 에 맞는 응답을 주도록 위임한다.
+
 
     @Override
     public void run() {
@@ -36,7 +38,8 @@ public class HttpRequestHandler implements Runnable{
 
                 // FrontController
                 DispatcherServlet dispatcherServlet = new DispatcherServlet(httpRequest);
-                Controller controller = dispatcherServlet.getController();
+//                Controller controller = dispatcherServlet.getController();    // 로직 작업 중
+                final Controller controller = dispatcherServlet.dispatch();
                 controller.process(httpResponse);
             }
 

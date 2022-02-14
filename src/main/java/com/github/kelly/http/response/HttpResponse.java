@@ -65,9 +65,5 @@ public class HttpResponse {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
     }
 }

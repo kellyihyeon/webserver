@@ -53,4 +53,21 @@ public class HttpResponse {
 
     }
 
+    public void redirect(String location) {
+        HttpStatus status = HttpStatus.FOUND;
+        String statusLine = String.format("HTTP/1.1 %d %s\r\n", status.getStatusCode(), status.getStatusText());
+        try {
+            dos.writeBytes(statusLine);
+            dos.writeBytes(String.format("%s: %s\r\n", "Location", location));
+            dos.writeBytes("\r\n");
+
+            dos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
 }

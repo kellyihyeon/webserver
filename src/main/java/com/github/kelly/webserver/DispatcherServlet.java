@@ -30,8 +30,6 @@ public class DispatcherServlet {
 
     private HttpRequest httpRequest;
 
-    // UserDefinedControllerResolver 로 이사 ////
-
 
     public DispatcherServlet(HttpRequest httpRequest) {
         this.httpRequest = httpRequest;
@@ -50,9 +48,25 @@ public class DispatcherServlet {
     public Controller dispatch() {
 
         // resolver. getController()
-        new UserDefinedControllerResolver(httpRequest);
-        new StaticFileControllerResolver(httpRequest);
+        UserDefinedRequestResolver userDefinedRequestResolver = new UserDefinedRequestResolver(httpRequest);
+        Controller controller = userDefinedRequestResolver.resolve();   // controller or null
+        if (controller != null) {
+            return controller;
+        }
 
+        StaticFileRequestResolver staticFileRequestResolver = new StaticFileRequestResolver(httpRequest);
+        Controller staticController = staticFileRequestResolver.resolve();
+        if (staticController != null) {
+            return staticController;
+        }
+
+        // dispatch 는 resolver 들에게 처리할 수 있는지 물어보고, 처리할 수 있다고 응답한 resolver 의 컨트롤러를 반환받는다.
+        // support()? -> userResolver: true!, staticResolver: false!
+        // true 면 controller 를 반환하는데 false 면 return 을 안받아도 되는데 어떻게 하냐? null 을 반환해도 되나??
+        // null 을 반환하면 dispatch 가 null 인지 검사를 하고 null 이 아닐 경우에만 특정 controller 를 handler 에게 넘긴다.
+        //                                                null 일 경우에는 NotFoundController 를 handler 에게 넘긴다.
+        // 그럼 여기서 정해진 것: resolver 인터페이스는 1.support() 메소드로 처리할 수 있는지 여부를 확인 할 것.
+        //                                         2. resolve() 메소드로 support 가 true 일 경우 특정 컨트롤러를 반환하고, false 면 null 반환할 것.
 
         return new NotFoundController();
     }

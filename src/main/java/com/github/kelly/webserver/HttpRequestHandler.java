@@ -40,7 +40,8 @@ public class HttpRequestHandler implements Runnable{
                 DispatcherServlet dispatcherServlet = new DispatcherServlet(httpRequest);
 //                Controller controller = dispatcherServlet.getController();    // 로직 작업 중
                 final Controller controller = dispatcherServlet.dispatch();
-                controller.process(httpResponse);
+                // 하... request 도 넘겨줘야지 ㅠ_ㅜ..........
+                controller.process(httpRequest, httpResponse);
             }
 
         } catch (

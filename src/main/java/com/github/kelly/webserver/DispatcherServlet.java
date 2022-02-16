@@ -6,24 +6,25 @@ import com.github.kelly.webserver.controller.NotFoundController;
 
 /**
  * Front Controller - A controller that handles all requests for a web site
- * responsibility: 요청에 맞는 컨트롤러 찾아서 반환해주기
- * 1. 사용자 정의 컨트롤러 반환 (UserDefinedControllerResolver)
- *      정의 해놓은 url-method 가 맞으면 맞는 Controller 를 반환한다.
- *      controller 를 반환받은 handler 가 controller 의 process(rep) 메소드를 실행한다.
+ * responsibility: resolver 통합체에게 request 에 맞는 컨트롤러를 반환할 것을 요청한다.
+ *                 dispatcher-resolver -> UserDefinedRequestResolver, StaticFileRequestResolver
+ *                 dispatcher-resolver:
+ *                          일단 request 를 보자. /home 인가 /home.html 인가?
+ *                          그럼 통합체는 어느 resolver 에게 요청을 줄 것인지를 결정해서 주는 역할을 해야 하는데
+ *                          support() - 여기서 확장자가 있으면(true) Static, 없으면(false) UserDefined
+ *                          resolve() - support-true 면 StaticResolver 를, false 면 UserResolver 를
+ *                                      -> Controller 를 반환해야해 ㅠㅜ........하...
+ *                                      잠깐... dispatcher.dispatch() 를 했을 때 실행 내용은
+ *                                      resolver 통합체.resolve() 를 호출하게끔 하고, 통합체.resolve() 실행 내용은
+ *                                      resolver 를 반환하는 게 아니라 아예 resolver.resolve()를 호출해서 Controller 를 반환받으면?
+ *                                      if (support) {
+ *                                          어차피 이걸 하려고 하는 거니까 애초에 resolve 까지 시키는 거지
+ *                                          return StaticResolver.resolve();  -> support 하면 Controller, 안하면 null 반환
+ *                                      }
  *
- * 2. static 파일 컨트롤러 반환 (StaticFileControllerResolver)
- *      정의 해놓은 static file 이 있으면 static file 전용 Controller 를 반환한다.
- *      (home.html 이 있다.
- *          String contents; (home.html 파일을 읽어서 컨텐트에 담아둠)
- *          return new StaticFileController(contents); 이렇게 생성자로 contents 를 넘겨놓고,
- *          StaticFileController 생성자에서 this.contents = contents; 저장해놓는다.
- *       )
- *      controller 를 반환받은 handler 가 controller 의 process(rep) 메소드를 실행한다. -> 실행할 때 이 경우에는 home.html 내용을 읽은 데이터를 넘겨줘야할텐데?
- *      멤버필드에 contents 가 있으니, 이 contents 를 웹 브라우저에 뿌린다.
- *
- * todo
- * redirect 후: url 에 /home.html 이 왔을 때 어떻게 할 것인가?
- * static 파일에 home.html 파일이 있는지 스캔하고 있으면 이 파일을 읽어서 웹 브라우저에 뿌려준다.
+ *                          일반 resolver 가 정의 하고 있는 메소드 (구체적으로 map 을 뒤져서 있는지 없는지 검사)
+ *                          support() - 각 resolver map 에 key(url,method)가 있는지 검사 true, false
+ *                          resolve() - support-true 면 해당 controller, false 면 null 반환
  *
  */
 public class DispatcherServlet {
@@ -34,7 +35,6 @@ public class DispatcherServlet {
     public DispatcherServlet(HttpRequest httpRequest) {
         this.httpRequest = httpRequest;
     }
-
 
     /**
      * todo
@@ -47,26 +47,22 @@ public class DispatcherServlet {
     // /home, GET
     public Controller dispatch() {
 
-        // resolver. getController()
-        UserDefinedRequestResolver userDefinedRequestResolver = new UserDefinedRequestResolver(httpRequest);
-        Controller controller = userDefinedRequestResolver.resolve();   // controller or null
-        if (controller != null) {
-            return controller;
+        // resolver 통합체에게 시킬 코드를 짜보자.
+        String url = httpRequest.getRequestLine().getUrl();
+        if (url.contains(".")) {
+            StaticFileRequestResolver staticFileRequestResolver = new StaticFileRequestResolver(httpRequest);
+            Controller staticController = staticFileRequestResolver.resolve();
+            if (staticController != null) {
+                return staticController;
+            }
+        } else {
+            UserDefinedRequestResolver userDefinedRequestResolver = new UserDefinedRequestResolver(httpRequest);
+            // resolve() 호출하면서 request 를 넘겨줘도 될 것 같은데 -> 일단 패스
+            Controller controller = userDefinedRequestResolver.resolve();   // controller or null
+            if (controller != null) {
+                return controller;
+            }
         }
-
-        StaticFileRequestResolver staticFileRequestResolver = new StaticFileRequestResolver(httpRequest);
-        Controller staticController = staticFileRequestResolver.resolve();
-        if (staticController != null) {
-            return staticController;
-        }
-
-        // dispatch 는 resolver 들에게 처리할 수 있는지 물어보고, 처리할 수 있다고 응답한 resolver 의 컨트롤러를 반환받는다.
-        // support()? -> userResolver: true!, staticResolver: false!
-        // true 면 controller 를 반환하는데 false 면 return 을 안받아도 되는데 어떻게 하냐? null 을 반환해도 되나??
-        // null 을 반환하면 dispatch 가 null 인지 검사를 하고 null 이 아닐 경우에만 특정 controller 를 handler 에게 넘긴다.
-        //                                                null 일 경우에는 NotFoundController 를 handler 에게 넘긴다.
-        // 그럼 여기서 정해진 것: resolver 인터페이스는 1.support() 메소드로 처리할 수 있는지 여부를 확인 할 것.
-        //                                         2. resolve() 메소드로 support 가 true 일 경우 특정 컨트롤러를 반환하고, false 면 null 반환할 것.
 
         return new NotFoundController();
     }

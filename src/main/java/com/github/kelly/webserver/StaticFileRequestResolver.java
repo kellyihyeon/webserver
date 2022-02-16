@@ -4,11 +4,6 @@ import com.github.kelly.http.request.HttpRequest;
 import com.github.kelly.webserver.controller.Controller;
 import com.github.kelly.webserver.controller.StaticFileController;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Objects;
 
 
 /**

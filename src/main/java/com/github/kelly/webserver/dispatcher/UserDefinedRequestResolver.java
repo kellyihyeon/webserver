@@ -1,14 +1,15 @@
-package com.github.kelly.webserver;
+package com.github.kelly.webserver.dispatcher;
 
 import com.github.kelly.http.request.HttpMethod;
 import com.github.kelly.http.request.HttpRequest;
 import com.github.kelly.webserver.controller.Controller;
 import com.github.kelly.webserver.controller.WelcomeController;
+
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class UserDefinedRequestResolver implements RequestResolver{
+public class UserDefinedRequestResolver implements RequestResolver {
 
     public static Map<RequestKey, Controller> controllerMap = new HashMap<>();
     private final RequestKey requestKey;

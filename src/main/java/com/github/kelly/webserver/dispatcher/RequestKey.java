@@ -1,4 +1,4 @@
-package com.github.kelly.webserver;
+package com.github.kelly.webserver.dispatcher;
 
 import com.github.kelly.http.request.HttpMethod;
 

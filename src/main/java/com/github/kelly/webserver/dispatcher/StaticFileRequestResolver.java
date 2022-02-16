@@ -1,8 +1,10 @@
-package com.github.kelly.webserver;
+package com.github.kelly.webserver.dispatcher;
 
 import com.github.kelly.http.request.HttpRequest;
 import com.github.kelly.webserver.controller.Controller;
 import com.github.kelly.webserver.controller.StaticFileController;
+import com.github.kelly.webserver.dispatcher.RequestResolver;
+
 import java.io.*;
 
 
@@ -11,7 +13,7 @@ import java.io.*;
  * 1. 들어온 요청을 지원하는지 확인한다.
  * 2. 지원하지 않으면 null, 지원 한다면 StaticController 반환
  * */
-public class StaticFileRequestResolver implements RequestResolver{
+public class StaticFileRequestResolver implements RequestResolver {
 
     private HttpRequest httpRequest;
     private final String DIRECTORY = "static";

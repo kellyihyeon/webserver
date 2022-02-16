@@ -25,22 +25,20 @@ public class StaticFileController implements Controller{
         mimeTypeMap.put("json", "application/json");
     }
 
-    /**
-     * StaticFileRequestResolver 는 request url 을 읽고 static 파일을 뒤져서 찾는다
-     * 파일이 존재하기 때문에 'resolver 통합체' 에게 StaticFileController 를 반환한다.
-     */
+
     @Override
     public void process(HttpRequest httpRequest, HttpResponse httpResponse) {
         System.out.println("StaticFileController.process");
-        // 어떤 url 을 요청받았는지 확인한다.
+
         String url = httpRequest.getRequestLine().getUrl();
-        String filePath = DIRECTORY + url; // /home.html
+        String filePath = DIRECTORY + url;
         // static -> url 주소에서 뽑아낸 데이터로 파일 찾아서 읽기
         byte[] body = FileReadUtil.readFromStaticFile(filePath);
         // 읽은 데이터를 response 로 내보내기
         // response 로 내보낼 때 필요한 것: content-type: mime 타입을 알아내야 한다.
         if (url.contains(".")) {
-            String extension = url.split("\\.")[1];
+            final int EXTENSION_INDEX = 1;
+            String extension = url.split("\\.")[EXTENSION_INDEX];
             httpResponse.addHeader("Content-Type", mimeTypeMap.get(extension));
             httpResponse.writeBody(body);
         }

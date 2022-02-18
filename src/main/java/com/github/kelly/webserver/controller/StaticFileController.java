@@ -1,5 +1,6 @@
 package com.github.kelly.webserver.controller;
 
+import com.github.kelly.controller.Controller;
 import com.github.kelly.http.request.HttpRequest;
 import com.github.kelly.http.response.HttpResponse;
 import com.github.kelly.utils.FileReadUtil;
@@ -11,7 +12,7 @@ import java.util.Map;
  *  request url 요청 들어온 파일을 읽어서 웹 브라우저의 응답으로 내보낸다.
  *
  */
-public class StaticFileController implements Controller{
+public class StaticFileController implements Controller {
 
     public static final String DIRECTORY = "static";
     private static final Map<String, String> mimeTypeMap = new HashMap<>();

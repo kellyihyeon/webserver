@@ -1,8 +1,8 @@
 package com.github.kelly.webserver.dispatcher;
 
 import com.github.kelly.http.request.HttpRequest;
-import com.github.kelly.webserver.controller.Controller;
-import com.github.kelly.webserver.controller.WelcomeController;
+import com.github.kelly.controller.Controller;
+import com.github.kelly.controller.WelcomeController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,10 +1,8 @@
 package com.github.kelly.http.request;
 
 /** todo
- *  클라이언트 ----> request 읽기 ( GET /url HTTP/1.1 )
- *  1.method
- *  2.url
- *  3.프로토콜
+ * query string 으로 넘긴 데이터 가져오기 -> /sighUp?userId=what&password=1234
+ * query string 을 처리하는 객체 만들기
  */
 public class RequestLine {
 

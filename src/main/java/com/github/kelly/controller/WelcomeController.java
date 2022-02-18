@@ -1,4 +1,4 @@
-package com.github.kelly.webserver.controller;
+package com.github.kelly.controller;
 
 import com.github.kelly.http.request.HttpRequest;
 import com.github.kelly.http.response.HttpResponse;

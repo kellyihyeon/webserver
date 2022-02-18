@@ -24,8 +24,6 @@ public class StaticFileRequestResolver implements RequestResolver {
 
     @Override
     public boolean support() {
-        // 파일이 있는지 없는지 확인한다. 읽을 필요는 없다. 여부만 확인한다.
-        // static/home.html
         String filePath = DIRECTORY + httpRequest.getRequestLine().getUrl();
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(filePath);
         try {

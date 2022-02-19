@@ -18,7 +18,7 @@ public class RequestLine {
         this.httpMethod = HttpMethod.valueOf(components[METHOD_INDEX]);
         this.protocol = components[PROTOCOL_INDEX];
 
-        String[] urlAndParameters = divideUrlAndParameters(components[URL_INDEX]);  // /welcome
+        String[] urlAndParameters = divideUrlAndParameters(components[URL_INDEX]);
         final int URL = 0;
         final int PARAMETERS = 1;
 
@@ -47,4 +47,13 @@ public class RequestLine {
     public QueryString getQueryString() {
         return queryString;
     }
+
+    public String getRawQueryString() {
+        return queryString.getRawQueryString();
+    }
+
+    public String getParameterValue(String key) {
+        return queryString.getParameterValue(key);
+    }
+
 }

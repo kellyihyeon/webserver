@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class RequestHeaders {
 
-    private final Map<String, String> requestHeader = new HashMap<>();
+    private final Map<String, String> requestHeaderMap = new HashMap<>();
 
     final int KEY = 0;
     final int VALUE = 1;
@@ -19,12 +19,12 @@ public class RequestHeaders {
 
         while (!(line = br.readLine()).equals("")) {
             keyAndValue = line.split(":", 2);
-            requestHeader.put(keyAndValue[KEY], keyAndValue[VALUE].trim());
+            requestHeaderMap.put(keyAndValue[KEY], keyAndValue[VALUE].trim());
         }
     }
 
 
     public String getHeader(String key) {
-        return requestHeader.get(key);
+        return requestHeaderMap.get(key);
     }
 }

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
+import java.util.Map;
 import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,7 +14,6 @@ class RequestLineTest {
     @Test
     @DisplayName("요청 라인을 생성자에 넘기면 객체가 생성된다.")
     void 요청라인_객체_생성_테스트() {
-        // request line
         String line = "GET /tdd HTTP/1.1";
         RequestLine requestLine = new RequestLine(line);
 
@@ -39,6 +39,28 @@ class RequestLineTest {
                             assertEquals(methodTestCase.method, requestLine.getHttpMethod());
                         }
                 ));
+    }
+
+    @Test
+    @DisplayName("url 이 /welcome?username=kiki&power=99 일 때 query parameters 를 제외한 url 만 분리한다.")
+    void url_분리_테스트() {
+        String line = "GET /welcome?username=kiki&power=99 HTTP/1.1";
+
+        RequestLine requestLine = new RequestLine(line);
+
+        assertEquals("/welcome", requestLine.getUrl());
+    }
+
+    @Test
+    @DisplayName("url 이 /welcome?username=kiki&power=99 일 때 url 를 제외한 query parameters 만 분리한다.")
+    void parameters_분리_테스트() {
+        String line = "GET /welcome?username=kiki&power=99 HTTP/1.1";
+
+        RequestLine requestLine = new RequestLine(line);
+        Map<String, String> queryStringMap = requestLine.getQueryString().getQueryStringMap();
+
+        assertEquals("kiki", queryStringMap.get("username"));
+        assertEquals("99", queryStringMap.get("power"));
     }
 
 

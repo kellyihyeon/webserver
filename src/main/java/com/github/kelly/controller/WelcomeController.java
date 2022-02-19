@@ -9,6 +9,8 @@ public class WelcomeController implements Controller {
     @Override
     public void process(HttpRequest httpRequest, HttpResponse httpResponse) {
         System.out.println("WelcomeController.process");
+        System.out.println("httpRequest.getUrl() = " + httpRequest.getUrl());
+        System.out.println("httpRequest.getQueryString() = " + httpRequest.getQueryString());
 
         httpResponse.redirect("/home.html");
     }

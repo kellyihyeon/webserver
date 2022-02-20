@@ -4,7 +4,7 @@ public class RequestLine {
 
     private final HttpMethod httpMethod;
     private final String url;
-    private QueryString queryString = null;
+    private final QueryString queryString;
     private final String protocol;
 
     private final int METHOD_INDEX = 0;
@@ -16,20 +16,17 @@ public class RequestLine {
         String[] components = line.split(" ");
 
         this.httpMethod = HttpMethod.valueOf(components[METHOD_INDEX]);
+        this.url = parseUrl(components[URL_INDEX]);
         this.protocol = components[PROTOCOL_INDEX];
 
-        String[] urlAndParameters = divideUrlAndParameters(components[URL_INDEX]);
-        final int URL = 0;
-        final int PARAMETERS = 1;
-
-        this.url = urlAndParameters[URL];
-        if (urlAndParameters.length > 1) {
-            this.queryString = new QueryString(urlAndParameters[PARAMETERS]);
-        }
+        this.queryString = new QueryString(components[URL_INDEX]);
     }
 
-    private String[] divideUrlAndParameters(String rawUrl) {
-        return rawUrl.split("\\?");
+    private String parseUrl(String url) {
+        if (url.contains("?")) {
+            return url.split("\\?")[0];
+        }
+        return url;
     }
 
     public HttpMethod getHttpMethod() {

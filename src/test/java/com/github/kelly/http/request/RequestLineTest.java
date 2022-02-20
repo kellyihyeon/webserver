@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
-import java.util.Map;
 import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,10 +56,9 @@ class RequestLineTest {
         String line = "GET /welcome?username=kiki&power=99 HTTP/1.1";
 
         RequestLine requestLine = new RequestLine(line);
-        Map<String, String> queryStringMap = requestLine.getQueryString().getQueryStringMap();
 
-        assertEquals("kiki", queryStringMap.get("username"));
-        assertEquals("99", queryStringMap.get("power"));
+        assertEquals("kiki", requestLine.getParameterValue("username"));
+        assertEquals("99", requestLine.getParameterValue("power"));
     }
 
 

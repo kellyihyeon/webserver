@@ -9,7 +9,6 @@ public class WelcomeController implements Controller {
     @Override
     public void process(HttpRequest httpRequest, HttpResponse httpResponse) {
         System.out.println("WelcomeController.process");
-        System.out.println("지금 쓰레드 = " + Thread.currentThread().getName());
 
         httpResponse.redirect("/home.html");
     }

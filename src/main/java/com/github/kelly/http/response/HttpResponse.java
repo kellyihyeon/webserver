@@ -58,6 +58,9 @@ public class HttpResponse {
         String statusLine = String.format("HTTP/1.1 %d %s\r\n", status.getStatusCode(), status.getStatusText());
         try {
             dos.writeBytes(statusLine);
+            for (Map.Entry<String, String> entry : responseHeaderMap.entrySet()) {
+                dos.writeBytes(String.format("%s: %s\r\n", entry.getKey(), entry.getValue()));
+            }
             dos.writeBytes(String.format("%s: %s\r\n", "Location", location));
             dos.writeBytes("\r\n");
 

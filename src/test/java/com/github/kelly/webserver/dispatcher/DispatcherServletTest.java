@@ -43,7 +43,7 @@ class DispatcherServletTest {
         DispatcherServlet dispatcher = new DispatcherServlet(httpRequest);
         Controller controller = dispatcher.dispatch();
 
-        String path = "com.github.kelly.webserver.controller";
+        String path = "com.github.kelly.controller";
         assertEquals(path + ".WelcomeController", controller.getClass().getName());
     }
 

@@ -28,6 +28,7 @@ public class Session {
     }
 
     public Object getAttribute(String sessionId) {
+        System.out.println("Session.getAttribute - sessionId = " + sessionId);
         return attributeMap.get(sessionId);
     }
 

@@ -9,6 +9,7 @@ import java.util.Locale;
  * Optional: Expires, Max-Age, Domain, Path, Secure, HttpOnly,
  */
 public class Cookie {
+
     private final String name;    // YH_COOKIE 로 통일할 예정
     private final String value;   // session id
 

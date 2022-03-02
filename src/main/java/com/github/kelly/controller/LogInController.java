@@ -2,15 +2,10 @@ package com.github.kelly.controller;
 
 import com.github.kelly.domain.Member;
 import com.github.kelly.domain.MemberRepository;
-import com.github.kelly.http.cookie.Cookie;
-import com.github.kelly.http.cookie.CookieParser;
-import com.github.kelly.http.cookie.CookieTypes;
 import com.github.kelly.http.request.HttpRequest;
 import com.github.kelly.http.response.HttpResponse;
 import com.github.kelly.http.session.Session;
 import com.github.kelly.http.session.SessionManager;
-
-import java.time.LocalDateTime;
 
 /**
  * happy path 구현
@@ -25,15 +20,6 @@ public class LogInController implements Controller {
 
         SessionManager sessionManager = SessionManager.getInstance();
 
-        // request headers 에 남아있는 기존 쿠키
-        String remainCookie = CookieParser.parseCookie(httpRequest);
-        if (remainCookie != null) {
-            Session remainSession = sessionManager.getSession(remainCookie);
-            remainSession.invalidate();
-            Object maybeNull = remainSession.getAttribute(remainCookie);
-            System.out.println("maybeNull = " + maybeNull);
-        }
-
         String userId = httpRequest.getParameter("userId");
         String password = httpRequest.getParameter("password");
 
@@ -41,13 +27,9 @@ public class LogInController implements Controller {
         if (findMember != null) {
             if (findMember.getPassword().equals(password)) {
 
-                Session session = sessionManager.getSession(null);
-                String sessionId = session.getId();
+                Session session = sessionManager.getSession(httpRequest, httpResponse);
+                session.setAttribute("memberIdentifier", findMember.getIdentifier());
 
-                Cookie cookie = new Cookie(CookieTypes.YH_COOKIE, sessionId);
-                cookie.setExpires(LocalDateTime.now().plusDays(1));
-
-                httpResponse.addHeader("Set-Cookie", cookie.createCookie());
                 httpResponse.redirect("/main.html");
             } else {
                 System.out.println("비밀번호가 일치하지 않습니다.");

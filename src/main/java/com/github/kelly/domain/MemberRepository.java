@@ -2,7 +2,6 @@ package com.github.kelly.domain;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class MemberRepository { // 싱글톤이어야 한다.
 

@@ -5,7 +5,7 @@ import com.github.kelly.http.request.HttpRequest;
 public class CookieParser {
 
 
-    public static String parseCookie(HttpRequest httpRequest) {
+    public static String parseYhCookie(HttpRequest httpRequest) {
         String rawValue = httpRequest.getRequestHeaders().getHeader("Cookie");
         String value = null;
 

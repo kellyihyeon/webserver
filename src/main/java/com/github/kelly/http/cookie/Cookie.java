@@ -10,7 +10,7 @@ import java.util.Locale;
  */
 public class Cookie {
 
-    private final CookieTypes name;    // YH_COOKIE 로 통일할 예정
+    private final String name;
     private final String value;   // session id
 
     // Optional
@@ -18,10 +18,12 @@ public class Cookie {
     private String maxAge;
 
 
-    public Cookie(CookieTypes name, String value) {
+    // *** test code error
+    public Cookie(String name, String value) {
         this.name = name;
         this.value = value;
     }
+
 
     // Expires=Mon, 21 Feb 2022 07:28:00 GMT
     public void setExpires(LocalDateTime dateTime) {
@@ -56,5 +58,11 @@ public class Cookie {
         return cookie.toString();
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public String getValue() {
+        return value;
+    }
 }

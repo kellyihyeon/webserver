@@ -1,5 +1,9 @@
 package com.github.kelly.http.request;
 
+import com.github.kelly.http.cookie.Cookie;
+import com.github.kelly.http.cookie.CookieTypes;
+import com.github.kelly.http.session.Session;
+import com.github.kelly.http.session.SessionManager;
 import java.io.*;
 import java.util.Map;
 
@@ -12,6 +16,9 @@ public class HttpRequest {
     private RequestHeaders requestHeaders;
     private RequestBody requestBody;
 
+    private Cookie[] cookies;
+    private Session session;        //
+
 
     public HttpRequest(InputStream inputStream) {
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
@@ -19,6 +26,8 @@ public class HttpRequest {
         try {
             this.requestLine = new RequestLine(br.readLine());
             this.requestHeaders = new RequestHeaders(br);
+            this.cookies = parseCookie();
+
             this.requestBody = new RequestBody(br, requestHeaders);
 
         } catch (IOException e) {
@@ -52,7 +61,7 @@ public class HttpRequest {
 
     // 각 controller 에서 parameter value 꺼낼 때
     public String getParameter(String key) {
-        String parameterValue = requestLine.getParameterValue(key);     // *** NullPointerException
+        String parameterValue = requestLine.getParameterValue(key);
         if (parameterValue != null) {
             return parameterValue;
         }
@@ -63,5 +72,44 @@ public class HttpRequest {
 
     public RequestHeaders getRequestHeaders() {
         return requestHeaders;
+    }
+
+    // request 에 쿠키와 세션을 두고 꺼내자. (CookieParser.parseCookie())
+    private Cookie[] parseCookie() {
+        // 쿠키 밸류 가져오기
+        String rawValue = requestHeaders.getHeader("Cookie");
+//        String value = null;
+        Cookie[] allCookies = null;
+
+        String[] cookieKeys = rawValue.split(";");
+        allCookies = new Cookie[cookieKeys.length];    // 초기화
+
+        for (int i = 0; i < cookieKeys.length; i++) {
+            System.out.println("cookieKey = " + cookieKeys[i]);
+            String cookieName = cookieKeys[i].split("=")[0].trim();     //j_session, YH_COOKIE ... httpOnly 는?
+            String cookieValue = cookieKeys[i].split("=")[1].trim();
+            allCookies[i] = new Cookie(cookieName, cookieValue);
+            System.out.println("allCookies = " + allCookies[i]);
+        }
+
+        return allCookies;
+    }
+
+    // YH_COOKIE
+    public Cookie getCustomCookie(String cookieName) {
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(cookieName)) {
+                return cookie;
+            }
+        }
+        return null;
+    }
+
+    public Session getSessionFromRequestHeaders() {
+        Cookie yhCookie = getCustomCookie(CookieTypes.YH_COOKIE.toString());
+        String value = yhCookie.getValue();
+
+        SessionManager sessionManager = SessionManager.getInstance();
+        return sessionManager.getSessionInRequest(value);
     }
 }

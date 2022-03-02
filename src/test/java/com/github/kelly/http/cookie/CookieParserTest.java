@@ -47,7 +47,7 @@ class CookieParserTest {
     @DisplayName("여러 개의 쿠키 중 cookie-name=YH_COOKIE 의 value 값을 추출한다.")
     void YH_COOKIE_value_추출_테스트() {
         String expectedValue = "2d1672d2-e0b5-45ec-928f-c3da110ae44f";
-        String cookieValue = CookieParser.parseCookie(httpRequest);
+        String cookieValue = CookieParser.parseYhCookie(httpRequest);
 
         assertEquals(expectedValue, cookieValue);
     }
@@ -55,6 +55,6 @@ class CookieParserTest {
     @Test
     @DisplayName("cookie-name=YH_COOKIE 가 없는 경우 value 값으로 null 이 반환된다.")
     void YH_COOKIE_value가_없는_경우_null_반환() {
-        assertNull(CookieParser.parseCookie(httpRequestWithoutYhCookie));
+        assertNull(CookieParser.parseYhCookie(httpRequestWithoutYhCookie));
     }
 }

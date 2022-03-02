@@ -14,7 +14,7 @@ public class MyPageController implements Controller {
 
     @Override
     public void process(HttpRequest httpRequest, HttpResponse httpResponse) {
-        String cookieValue = CookieParser.parseCookie(httpRequest);     // session in
+        String cookieValue = CookieParser.parseYhCookie(httpRequest);     // session in
         // 세션 아이디로 세션 찾고, 세션에 저장된 멤버 찾고, 멤버 아이디를 뽑는 것이 목표다.
         SessionManager sessionManager = SessionManager.getInstance();
         Session session = sessionManager.getSession(cookieValue);

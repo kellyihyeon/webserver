@@ -1,5 +1,10 @@
 package com.github.kelly.http.session;
 
+import com.github.kelly.http.cookie.Cookie;
+import com.github.kelly.http.cookie.CookieTypes;
+import com.github.kelly.http.request.HttpRequest;
+import com.github.kelly.http.response.HttpResponse;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -38,6 +43,39 @@ public class SessionManager {
             value = sessionId;
         }
         return sessionMap.get(value);
+    }
+
+
+    // 생명주기: 로그인 ~ 로그아웃
+    public Session getSession(HttpRequest request, HttpResponse response) {
+
+        Cookie remainCookie = request.getCustomCookie(CookieTypes.YH_COOKIE.toString());
+        if (remainCookie != null) {
+
+            String valueFromRemainCookie = remainCookie.getValue();
+
+            remainCookie.setMaxAge(0);      // request header cookie 에서 삭제
+            Session remainSession = sessionMap.get(valueFromRemainCookie);
+            if (remainSession != null) {
+                remainSession.invalidate();     // session map 에서 삭제
+            }
+            // 로그아웃 한 경우: request 쿠키에서만 제거, 로그아웃 안했을 경우: request 쿠키에서 제거, 세션맵에서도 제거
+        }
+
+        createSession();
+        // *** refactoring
+        Session newSession = sessionMap.get(sessionId);
+        Cookie cookie = new Cookie(CookieTypes.YH_COOKIE.toString(), newSession.getId());
+        cookie.setExpires(LocalDateTime.now().plusDays(7));
+        response.addHeader("Set-Cookie", cookie.createCookie());
+
+        System.out.println("newSession = " + newSession);
+        return newSession;
+
+    }
+
+    public Session getSessionInRequest(String sessionId) {
+        return sessionMap.get(sessionId);
     }
 
     private void createSession() {   // 세션을 만들어준다.

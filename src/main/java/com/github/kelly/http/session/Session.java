@@ -15,9 +15,8 @@ public class Session {
     }
 
     /**
-     *
-     * @param name      Session id
-     * @param value     Object 식별자 (User id)
+     * @param name      memberIdentifier
+     * @param value     Object 식별자 (member 식별자)
      */
     public void setAttribute(String name, Object value) {
         attributeMap.put(name, value);
@@ -27,6 +26,7 @@ public class Session {
         return id;
     }
 
+    // *** 변수: 고쳐야 함 String attributeName
     public Object getAttribute(String sessionId) {
         System.out.println("Session.getAttribute - sessionId = " + sessionId);
         return attributeMap.get(sessionId);
@@ -37,7 +37,7 @@ public class Session {
     }
 
     /**
-     * Session Id 가 일치하면 동일성 인정
+     * Session Id 가 일치하면 동일성 인정 -> 삭제
      */
     @Override
     public boolean equals(Object o) {

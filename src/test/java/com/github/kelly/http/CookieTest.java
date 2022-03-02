@@ -1,5 +1,7 @@
 package com.github.kelly.http;
 
+import com.github.kelly.http.cookie.Cookie;
+import com.github.kelly.http.cookie.CookieTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;

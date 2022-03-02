@@ -1,4 +1,4 @@
-package com.github.kelly.http;
+package com.github.kelly.http.cookie;
 
 import com.github.kelly.http.request.HttpRequest;
 

@@ -2,9 +2,14 @@ package com.github.kelly.controller;
 
 import com.github.kelly.domain.Member;
 import com.github.kelly.domain.MemberRepository;
-import com.github.kelly.http.*;
+import com.github.kelly.http.cookie.Cookie;
+import com.github.kelly.http.cookie.CookieParser;
+import com.github.kelly.http.cookie.CookieTypes;
 import com.github.kelly.http.request.HttpRequest;
 import com.github.kelly.http.response.HttpResponse;
+import com.github.kelly.http.session.Session;
+import com.github.kelly.http.session.SessionManager;
+
 import java.time.LocalDateTime;
 
 /**

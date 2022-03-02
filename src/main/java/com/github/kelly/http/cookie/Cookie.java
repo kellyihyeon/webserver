@@ -1,4 +1,4 @@
-package com.github.kelly.http;
+package com.github.kelly.http.cookie;
 
 import java.time.LocalDateTime;
 import java.time.format.TextStyle;

@@ -1,4 +1,4 @@
-package com.github.kelly.http;
+package com.github.kelly.http.session;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -31,15 +31,11 @@ public class SessionManager {
     }
 
 
-    public Session getSession() {   // 사용한 코드가 있다. (SignUpController.class)
-        createSession();
-        return sessionMap.get(sessionId);
-    }
-
-    public Session getSessionBeta(String value) {
+    public Session getSession(String value) {
         if (sessionMap.get(value) == null) {
-            System.out.println("SessionManager.getSessionBeta - sessionMap 에 session 이 없습니다.");
+            System.out.println("SessionManager.getSession - sessionMap 에 session 이 없습니다.");
             createSession();
+            value = sessionId;
         }
         return sessionMap.get(value);
     }

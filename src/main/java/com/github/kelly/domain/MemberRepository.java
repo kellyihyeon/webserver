@@ -2,6 +2,7 @@ package com.github.kelly.domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MemberRepository { // 싱글톤이어야 한다.
 
@@ -22,6 +23,14 @@ public class MemberRepository { // 싱글톤이어야 한다.
 
     public Member getMember(Long id) {
         return memberMap.get(id);
+    }
+
+    public Member getMemberFromMemberId(String memberId) {
+        return memberMap.values().stream()
+                                .filter(member -> member.getMemberId().equals(memberId))
+                                .findFirst()
+                                .orElse(null);
+
     }
 
     public Long getNumberOfMember() {

@@ -10,14 +10,14 @@ import java.util.Locale;
  */
 public class Cookie {
 
-    private final String name;    // YH_COOKIE 로 통일할 예정
+    private final CookieTypes name;    // YH_COOKIE 로 통일할 예정
     private final String value;   // session id
 
     // Optional
     private String expires;
 
 
-    public Cookie(String name, String value) {
+    public Cookie(CookieTypes name, String value) {
         this.name = name;
         this.value = value;
     }

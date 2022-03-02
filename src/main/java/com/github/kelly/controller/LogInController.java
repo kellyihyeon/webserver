@@ -18,14 +18,24 @@ public class LogInController implements Controller {
     public void process(HttpRequest httpRequest, HttpResponse httpResponse) {
         System.out.println("LogInController.process");
 
+        SessionManager sessionManager = SessionManager.getInstance();
+
+        // request headers 에 남아있는 기존 쿠키
+        String remainCookie = CookieParser.parseCookie(httpRequest);
+        if (remainCookie != null) {
+            Session remainSession = sessionManager.getSession(remainCookie);
+            remainSession.invalidate();
+            Object maybeNull = remainSession.getAttribute(remainCookie);
+            System.out.println("maybeNull = " + maybeNull);
+        }
+
         String userId = httpRequest.getParameter("userId");
         String password = httpRequest.getParameter("password");
 
         Member findMember = memberRepository.getMemberFromMemberId(userId);
         if (findMember != null) {
             if (findMember.getPassword().equals(password)) {
-                // 로그인 성공
-                SessionManager sessionManager = SessionManager.getInstance();
+
                 Session session = sessionManager.getSession(null);
                 String sessionId = session.getId();
 

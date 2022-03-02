@@ -32,6 +32,10 @@ public class Session {
         return attributeMap.get(sessionId);
     }
 
+    public void invalidate() {
+        attributeMap.remove(id);
+    }
+
     /**
      * Session Id 가 일치하면 동일성 인정
      */

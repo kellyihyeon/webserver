@@ -15,6 +15,7 @@ public class Cookie {
 
     // Optional
     private String expires;
+    private String maxAge;
 
 
     public Cookie(CookieTypes name, String value) {
@@ -35,12 +36,21 @@ public class Cookie {
         this.expires = "Expires=" + dayName + ", " + day + " " + month + " " + year + " " + hour + ":" + minute + ":" + second + " GMT";
     }
 
+    public void setMaxAge(int number) {
+        this.maxAge = "Max-Age=" + number;
+
+    }
+
     public String createCookie() {
         StringBuilder attributes = new StringBuilder();
         StringBuilder cookie = attributes.append(name).append("=").append(value);
         // "yh-cookie=choco-mint"
         if (expires != null) {
             cookie.append("; ").append(expires);
+        }
+
+        if (maxAge != null) {
+            cookie.append("; ").append(maxAge);
         }
 
         return cookie.toString();

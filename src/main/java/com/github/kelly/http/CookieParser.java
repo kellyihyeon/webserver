@@ -7,7 +7,7 @@ public class CookieParser {
 
     public static String parseCookie(HttpRequest httpRequest) {
         String rawValue = httpRequest.getRequestHeaders().getHeader("Cookie");
-        String value = "";
+        String value = null;
 
         if (rawValue.contains(";")) {
             String[] cookieKeys = rawValue.split(";");

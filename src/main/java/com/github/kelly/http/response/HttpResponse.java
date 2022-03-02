@@ -16,6 +16,7 @@ public class HttpResponse {
     private Map<String, String> responseHeaderMap = new HashMap<>();
 
     private DataOutputStream dos;
+    private String bodyMessage;
 
     // 간단해진 생성자
     public HttpResponse(OutputStream outputStream) {
@@ -64,7 +65,20 @@ public class HttpResponse {
             dos.writeBytes(String.format("%s: %s\r\n", "Location", location));
             dos.writeBytes("\r\n");
 
+//            addOptionalBody(bodyMessage);
             dos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addOptionalBody(String parameter) {
+        try {
+            if (parameter != null) {
+                bodyMessage = parameter;
+                dos.write(parameter.getBytes());
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

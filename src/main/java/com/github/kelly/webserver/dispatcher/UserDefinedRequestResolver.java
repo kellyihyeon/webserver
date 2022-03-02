@@ -1,11 +1,8 @@
 package com.github.kelly.webserver.dispatcher;
 
-import com.github.kelly.controller.LogInController;
-import com.github.kelly.controller.SignUpController;
+import com.github.kelly.controller.*;
 import com.github.kelly.http.request.HttpMethod;
 import com.github.kelly.http.request.HttpRequest;
-import com.github.kelly.controller.Controller;
-import com.github.kelly.controller.WelcomeController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +18,8 @@ public class UserDefinedRequestResolver implements RequestResolver {
         controllerMap.put(new RequestKey("/welcome", HttpMethod.GET), new WelcomeController());
         controllerMap.put(new RequestKey("/signup", HttpMethod.POST), new SignUpController());
         controllerMap.put(new RequestKey("/login", HttpMethod.POST), new LogInController());
+        controllerMap.put(new RequestKey("/mypage", HttpMethod.GET), new MyPageController());
+        controllerMap.put(new RequestKey("/logout", HttpMethod.GET), new LogOutController());
     }
 
     public UserDefinedRequestResolver(HttpRequest httpRequest) {

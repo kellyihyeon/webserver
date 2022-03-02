@@ -35,4 +35,17 @@ class SessionTest {
         assertEquals(sessionA, sessionB);
         assertEquals(sessionA.getClass().hashCode(), sessionB.getClass().hashCode());
     }
+
+    @Test
+    @DisplayName("세션 id 를 제거하면 세션 id 와 바인딩 된 유저의 정보는 null 이 된다.")
+    void session_제거_테스트() {
+        String sessionId = UUID.randomUUID().toString();
+        Session session = new Session(sessionId);
+
+        session.setAttribute(sessionId, 1L);
+        assertEquals(1L, session.getAttribute(sessionId));
+
+        session.invalidate();
+        assertNull(session.getAttribute(sessionId));
+    }
 }

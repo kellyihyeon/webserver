@@ -13,6 +13,7 @@ public class UserDefinedRequestResolver implements RequestResolver {
 
 
     static {
+        controllerMap.put(new RequestKey("/", HttpMethod.GET), new WelcomeController());
         controllerMap.put(new RequestKey("/welcome", HttpMethod.GET), new WelcomeController());
         controllerMap.put(new RequestKey("/signup", HttpMethod.POST), new SignUpController());
         controllerMap.put(new RequestKey("/login", HttpMethod.POST), new LogInController());

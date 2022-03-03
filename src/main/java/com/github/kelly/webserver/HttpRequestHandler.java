@@ -41,5 +41,7 @@ public class HttpRequestHandler implements Runnable {
                 IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println("HttpRequestHandler.run = " + Thread.currentThread().getName());
     }
 }

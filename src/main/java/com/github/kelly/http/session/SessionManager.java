@@ -17,74 +17,59 @@ import java.util.UUID;
  */
 public class SessionManager {
 
-    private static SessionManager manager;
+    private static final SessionManager sessionManager = new SessionManager();
     private final Map<String, Session> sessionMap = new HashMap<>();
-    private String sessionId;
 
-    /**
-     * SINGLETON !!!
-     */
+
     private SessionManager() {
+        // this is SINGLETON
     }
 
 
-    public static SessionManager getInstance() {     // 싱글톤인 manager 반환
-        if (manager == null) {
-            manager = new SessionManager();
-        }
-        return manager;
+    public static Session getSession(HttpRequest request, HttpResponse response) {
+        return sessionManager.parseSession(request, response);
     }
 
-
-    public Session getSession(String value) {
-        if (sessionMap.get(value) == null) {
-            System.out.println("SessionManager.getSession - sessionMap 에 session 이 없습니다.");
-            createSession();
-            value = sessionId;
-        }
-        return sessionMap.get(value);
-    }
 
 
     // 생명주기: 로그인 ~ 로그아웃
-    public Session getSession(HttpRequest request, HttpResponse response) {
-
-        Cookie remainCookie = request.getCustomCookie(CookieTypes.YH_COOKIE.toString());
+    private Session parseSession(HttpRequest request, HttpResponse response) {
+        Cookie remainCookie = request.getCustomCookie(CookieTypes.YH_COOKIE.name());
         if (remainCookie != null) {
-
             String valueFromRemainCookie = remainCookie.getValue();
-
-            remainCookie.setMaxAge(0);      // request header cookie 에서 삭제
             Session remainSession = sessionMap.get(valueFromRemainCookie);
             if (remainSession != null) {
-                remainSession.invalidate();     // session map 에서 삭제
+                return remainSession;
             }
-            // 로그아웃 한 경우: request 쿠키에서만 제거, 로그아웃 안했을 경우: request 쿠키에서 제거, 세션맵에서도 제거
         }
 
-        createSession();
-        // *** refactoring
-        Session newSession = sessionMap.get(sessionId);
-        Cookie cookie = new Cookie(CookieTypes.YH_COOKIE.toString(), newSession.getId());
+        return createSession(response);
+    }
+
+//    public Session getSessionInRequest(String sessionId) {
+//        return sessionMap.get(sessionId);
+//    }
+
+    /**
+     * 세션을 만들어준다.
+     * 만든 세션을 쿠키에 넣고, 해당 쿠키는 response header 에 추가해 내려준다.
+     *
+     * @return Session
+     */
+    private Session createSession(HttpResponse response) {
+        String sessionId = UUID.randomUUID().toString();
+        sessionMap.put(sessionId, new Session(sessionId));  // 동일성 구현 - equals and hashCode
+
+        Cookie cookie = new Cookie(CookieTypes.YH_COOKIE.name(), sessionId);
         cookie.setExpires(LocalDateTime.now().plusDays(7));
         response.addHeader("Set-Cookie", cookie.createCookie());
 
-        System.out.println("newSession = " + newSession);
-        return newSession;
-
-    }
-
-    public Session getSessionInRequest(String sessionId) {
         return sessionMap.get(sessionId);
     }
 
-    private void createSession() {   // 세션을 만들어준다.
-        makeSessionId();
-        sessionMap.put(sessionId, new Session(sessionId));  // 동일성 구현 - equals and hashCode
+    public static void removeSession(String sessionId) {
+        sessionManager.sessionMap.remove(sessionId);
     }
 
-    private void makeSessionId() {
-        this.sessionId = UUID.randomUUID().toString();
-    }
 
 }

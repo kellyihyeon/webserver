@@ -14,9 +14,10 @@ public class Session {
         this.id = id;
     }
 
-    /**
-     * @param name      memberIdentifier
-     * @param value     Object 식별자 (member 식별자)
+    /** Session 을 사용자가 로그인 했음을 알 수 있는 데이터 저장소로 이용한다.
+     *
+     * @param name      memberIdentifier ...
+     * @param value     Session attribute map 에는 member 의 식별자(로그인 했음을 알 수 있는 정보)를 담는다.
      */
     public void setAttribute(String name, Object value) {
         attributeMap.put(name, value);
@@ -26,14 +27,13 @@ public class Session {
         return id;
     }
 
-    // *** 변수: 고쳐야 함 String attributeName
-    public Object getAttribute(String sessionId) {
-        System.out.println("Session.getAttribute - sessionId = " + sessionId);
-        return attributeMap.get(sessionId);
+
+    public Object getAttribute(String name) {
+        return attributeMap.get(name);
     }
 
     public void invalidate() {
-        attributeMap.remove(id);
+        attributeMap.clear();
     }
 
     /**

@@ -18,8 +18,6 @@ public class LogInController implements Controller {
     public void process(HttpRequest httpRequest, HttpResponse httpResponse) {
         System.out.println("LogInController.process");
 
-        SessionManager sessionManager = SessionManager.getInstance();
-
         String userId = httpRequest.getParameter("userId");
         String password = httpRequest.getParameter("password");
 
@@ -27,7 +25,7 @@ public class LogInController implements Controller {
         if (findMember != null) {
             if (findMember.getPassword().equals(password)) {
 
-                Session session = sessionManager.getSession(httpRequest, httpResponse);
+                Session session = SessionManager.getSession(httpRequest, httpResponse);
                 session.setAttribute("memberIdentifier", findMember.getIdentifier());
 
                 httpResponse.redirect("/main.html");

@@ -78,7 +78,6 @@ public class HttpRequest {
     private Cookie[] parseCookie() {
         // 쿠키 밸류 가져오기
         String rawValue = requestHeaders.getHeader("Cookie");
-//        String value = null;
         Cookie[] allCookies = null;
 
         String[] cookieKeys = rawValue.split(";");
@@ -105,11 +104,12 @@ public class HttpRequest {
         return null;
     }
 
-    public Session getSessionFromRequestHeaders() {
-        Cookie yhCookie = getCustomCookie(CookieTypes.YH_COOKIE.toString());
-        String value = yhCookie.getValue();
-
-        SessionManager sessionManager = SessionManager.getInstance();
-        return sessionManager.getSessionInRequest(value);
-    }
+    // 왜 만들었다가 안썼지?
+//    public Session getSessionFromRequestHeaders() {
+//        Cookie yhCookie = getCustomCookie(CookieTypes.YH_COOKIE.toString());
+//        String value = yhCookie.getValue();
+//
+//        SessionManager sessionManager = SessionManager.getInstance();
+//        return sessionManager.getSessionInRequest(value);
+//    }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * 역할:
- *    support() - request url 데이터를 가져와 StaticFile 을 요청한 request 인지 확인한다.
+ *    support() - 지원하는 resolver 가 존재하는지 여부를 반환
  *    resolve() - support 메소드 반환 결과에 따라 어느 Resolver 를 실행할 것인지 결정하고 Controller 를 반환받는다.
  */
 public class RequestResolverManager implements RequestResolver {

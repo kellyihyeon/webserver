@@ -9,12 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * 역할: 세션을 관리한다.
- * 책임: 세션을 생성한다. 생성한 세션을 세션맵(저장소)을 이용해 관리한다.
- *      세션에 관한 처리는 SessionManager 를 통해서만 이루어져야 한다.
- *
- */
+
 public class SessionManager {
 
     private static final SessionManager sessionManager = new SessionManager();

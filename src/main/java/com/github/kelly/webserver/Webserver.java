@@ -16,6 +16,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public class Webserver implements Runnable {
 
+    // todo: 쓰레드 풀 - 코어 쓰레드, 맥시멈 쓰레드, 큐 정보 설정
     ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
 
@@ -32,10 +33,11 @@ public class Webserver implements Runnable {
                 System.out.println("Webserver.run = " + Thread.currentThread().getName());
             }
 
-            threadPoolExecutor.shutdown();
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            threadPoolExecutor.shutdown();
         }
 
     }

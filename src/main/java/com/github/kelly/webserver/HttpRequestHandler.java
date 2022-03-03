@@ -35,7 +35,7 @@ public class HttpRequestHandler implements Runnable {
             HttpResponse httpResponse = new HttpResponse(outputStream);
 
             Controller controller = DISPATCHER_SERVLET.dispatch(httpRequest);
-            controller.process(httpRequest, httpResponse);
+            controller.process(httpRequest, httpResponse);  // todo: 응답 내려오는 게 너무 느린데?
 
         } catch (
                 IOException e) {

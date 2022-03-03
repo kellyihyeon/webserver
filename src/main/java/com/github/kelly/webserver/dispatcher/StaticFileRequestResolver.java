@@ -13,17 +13,12 @@ import java.io.*;
  * */
 public class StaticFileRequestResolver implements RequestResolver {
 
-    private HttpRequest httpRequest;
+
     private final String DIRECTORY = "static";
 
 
-    public StaticFileRequestResolver(HttpRequest httpRequest) {
-        this.httpRequest = httpRequest;
-    }
-
-
     @Override
-    public boolean support() {
+    public boolean support(HttpRequest httpRequest) {
         String filePath = DIRECTORY + httpRequest.getRequestLine().getUrl();
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(filePath);
         try {
@@ -41,8 +36,8 @@ public class StaticFileRequestResolver implements RequestResolver {
     }
 
     @Override
-    public Controller resolve() {
-        if (support()) {
+    public Controller resolve(HttpRequest httpRequest) {
+        if (support(httpRequest)) {
             return new StaticFileController();
         }
 

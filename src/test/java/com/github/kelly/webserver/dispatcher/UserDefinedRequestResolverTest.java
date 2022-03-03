@@ -44,8 +44,8 @@ class UserDefinedRequestResolverTest {
     void 정의_되지_않은_url_or_method_요청(String requestLine) {
         HttpRequest wrongRequest = getWrongRequest(requestLine);
 
-        UserDefinedRequestResolver userDefinedRequestResolver = new UserDefinedRequestResolver(wrongRequest);
-        Controller maybeNull = userDefinedRequestResolver.resolve();
+        UserDefinedRequestResolver userDefinedRequestResolver = new UserDefinedRequestResolver();
+        Controller maybeNull = userDefinedRequestResolver.resolve(httpRequest);
 
         assertThrows(NullPointerException.class, () -> maybeNull.getClass());
     }
@@ -54,8 +54,8 @@ class UserDefinedRequestResolverTest {
     @Test
     @DisplayName("정의 되어있는 method-url 을 요청하면 해당 Controller 가 반환된다.")
     void 정의_되어있는_url_요청() {
-        UserDefinedRequestResolver userDefinedRequestResolver = new UserDefinedRequestResolver(httpRequest);
-        Controller maybeController = userDefinedRequestResolver.resolve();
+        UserDefinedRequestResolver userDefinedRequestResolver = new UserDefinedRequestResolver();
+        Controller maybeController = userDefinedRequestResolver.resolve(httpRequest);
 
         assertEquals(WelcomeController.class, maybeController.getClass());
     }

@@ -20,9 +20,9 @@ class RequestResolverManagerTest {
                 "\r\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(httpRequestStr.getBytes());
         HttpRequest httpRequest = new HttpRequest(inputStream);
-        RequestResolverManager requestResolverManager = new RequestResolverManager(httpRequest);
+        RequestResolverManager requestResolverManager = new RequestResolverManager();
 
-        boolean support = requestResolverManager.support();
+        boolean support = requestResolverManager.support(httpRequest);
         assertTrue(support);
     }
 
@@ -36,9 +36,9 @@ class RequestResolverManagerTest {
                 "\r\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(httpRequestStr.getBytes());
         HttpRequest httpRequest = new HttpRequest(inputStream);
-        RequestResolverManager requestResolverManager = new RequestResolverManager(httpRequest);
+        RequestResolverManager requestResolverManager = new RequestResolverManager();
 
-        assertNull(requestResolverManager.resolve());
+        assertNull(requestResolverManager.resolve(httpRequest));
     }
 
     @Test
@@ -50,9 +50,9 @@ class RequestResolverManagerTest {
                 "\r\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(httpRequestStr.getBytes());
         HttpRequest httpRequest = new HttpRequest(inputStream);
-        RequestResolverManager requestResolverManager = new RequestResolverManager(httpRequest);
+        RequestResolverManager requestResolverManager = new RequestResolverManager();
 
-        assertEquals(StaticFileController.class, requestResolverManager.resolve().getClass());
+        assertEquals(StaticFileController.class, requestResolverManager.resolve(httpRequest).getClass());
     }
 
     @Test
@@ -64,9 +64,9 @@ class RequestResolverManagerTest {
                 "\r\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(httpRequestStr.getBytes());
         HttpRequest httpRequest = new HttpRequest(inputStream);
-        RequestResolverManager requestResolverManager = new RequestResolverManager(httpRequest);
+        RequestResolverManager requestResolverManager = new RequestResolverManager();
 
-        boolean support = requestResolverManager.support();
+        boolean support = requestResolverManager.support(httpRequest);
         assertFalse(support);
     }
 
@@ -79,9 +79,9 @@ class RequestResolverManagerTest {
                 "\r\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(httpRequestStr.getBytes());
         HttpRequest httpRequest = new HttpRequest(inputStream);
-        RequestResolverManager requestResolverManager = new RequestResolverManager(httpRequest);
+        RequestResolverManager requestResolverManager = new RequestResolverManager();
 
-        assertNull(requestResolverManager.resolve());
+        assertNull(requestResolverManager.resolve(httpRequest));
     }
 
     @Test
@@ -93,8 +93,8 @@ class RequestResolverManagerTest {
                 "\r\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(httpRequestStr.getBytes());
         HttpRequest httpRequest = new HttpRequest(inputStream);
-        RequestResolverManager requestResolverManager = new RequestResolverManager(httpRequest);
+        RequestResolverManager requestResolverManager = new RequestResolverManager();
 
-        assertEquals(WelcomeController.class, requestResolverManager.resolve().getClass());
+        assertEquals(WelcomeController.class, requestResolverManager.resolve(httpRequest).getClass());
     }
 }

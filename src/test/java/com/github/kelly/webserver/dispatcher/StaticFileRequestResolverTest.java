@@ -40,7 +40,7 @@ class StaticFileRequestResolverTest {
     void 정의하지_않은_static_file_요청() {
         HttpRequest wrongRequest = getWrongRequest();
         StaticFileRequestResolver staticFileRequestResolver = new StaticFileRequestResolver(wrongRequest);
-        Controller maybeNull = staticFileRequestResolver.resolve();
+        Controller maybeNull = staticFileRequestResolver.resolve(httpRequest);
 
         assertThrows(NullPointerException.class, () -> maybeNull.getClass());
 //        assertThrows(NullPointerException.class, maybeNull::getClass);
@@ -50,7 +50,7 @@ class StaticFileRequestResolverTest {
     @DisplayName("정의되어 있는 static file 을 요청하면 StaticFileController 를 반환한다.")
     void 정의되어_있는_static_file_요청() {
         StaticFileRequestResolver staticFileRequestResolver = new StaticFileRequestResolver(httpRequest);
-        Controller maybeController = staticFileRequestResolver.resolve();
+        Controller maybeController = staticFileRequestResolver.resolve(httpRequest);
 
         assertEquals(StaticFileController.class, maybeController.getClass());
     }

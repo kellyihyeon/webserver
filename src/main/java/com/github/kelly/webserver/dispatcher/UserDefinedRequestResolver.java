@@ -10,7 +10,6 @@ import java.util.Map;
 public class UserDefinedRequestResolver implements RequestResolver {
 
     public static Map<RequestKey, Controller> controllerMap = new HashMap<>();
-    private final RequestKey requestKey;
 
 
     static {
@@ -20,20 +19,17 @@ public class UserDefinedRequestResolver implements RequestResolver {
         controllerMap.put(new RequestKey("/logout", HttpMethod.GET), new LogOutController());
     }
 
-    public UserDefinedRequestResolver(HttpRequest httpRequest) {
-        String url = httpRequest.getRequestLine().getUrl();
-        HttpMethod method = httpRequest.getRequestLine().getHttpMethod();
-        requestKey = new RequestKey(url, method);
-    }
 
     @Override
-    public boolean support() {
+    public boolean support(HttpRequest httpRequest) {
+        RequestKey requestKey = new RequestKey(httpRequest.getUrl(), httpRequest.getHttpMethod());
         return controllerMap.containsKey(requestKey);
     }
 
     @Override
-    public Controller resolve() {
-        if (support()) {
+    public Controller resolve(HttpRequest httpRequest) {
+        if (support(httpRequest)) {
+            RequestKey requestKey = new RequestKey(httpRequest.getUrl(), httpRequest.getHttpMethod());
             return controllerMap.get(requestKey);
         }
         return null;

@@ -12,21 +12,19 @@ import java.util.List;
  */
 public class RequestResolverManager implements RequestResolver {
 
-    private final HttpRequest httpRequest;
     private final List<RequestResolver> resolvers = new ArrayList<>();
 
-    public RequestResolverManager(HttpRequest httpRequest) {
-        this.httpRequest = httpRequest;
 
-        resolvers.add(new UserDefinedRequestResolver(httpRequest));
-        resolvers.add(new StaticFileRequestResolver(httpRequest));
+    public RequestResolverManager() {
+        resolvers.add(new UserDefinedRequestResolver());
+        resolvers.add(new StaticFileRequestResolver());
     }
 
     @Override
-    public boolean support() {
+    public boolean support(HttpRequest httpRequest) {
         // 1. 유저 리졸버  2.스태틱 리졸버
         for (RequestResolver resolver : resolvers) {
-            if (resolver.support()) {
+            if (resolver.support(httpRequest)) {
                 return true;
             }
         }
@@ -34,10 +32,10 @@ public class RequestResolverManager implements RequestResolver {
     }
 
     @Override
-    public Controller resolve() {
-        if (support()) {    // 해당 컨트롤러가 있다.
+    public Controller resolve(HttpRequest httpRequest) {
+        if (support(httpRequest)) {    // 해당 컨트롤러가 있다.
             for (RequestResolver resolver : resolvers) {
-                Controller controller = resolver.resolve();
+                Controller controller = resolver.resolve(httpRequest);
                 if (controller != null) {
                     return controller;
                 }

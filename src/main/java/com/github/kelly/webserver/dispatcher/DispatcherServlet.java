@@ -11,14 +11,14 @@ import com.github.kelly.webserver.controller.NotFoundController;
 */
 public class DispatcherServlet {
 
+    RequestResolverManager resolverManager = new RequestResolverManager();
+
 
     public Controller dispatch(HttpRequest httpRequest) {
-        // todo: 매번 새 객체 생성하지 않고 객체 하나만 접근할 수 있도록
-        RequestResolverManager resolverManager = new RequestResolverManager(httpRequest);
-        Controller controllerOrNull = resolverManager.resolve();
+        Controller controllerOrNull = resolverManager.resolve(httpRequest);
 
         if (controllerOrNull == null) {
-            return new NotFoundController();
+            return new NotFoundController();    // todo: 매번 새 객체 생성하지 않고 객체 하나만 접근할 수 있도록
         }
 
         return controllerOrNull;

@@ -4,46 +4,38 @@ import com.github.kelly.http.request.HttpRequest;
 import com.github.kelly.http.response.HttpResponse;
 import com.github.kelly.controller.Controller;
 import com.github.kelly.webserver.dispatcher.DispatcherServlet;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
  * HTTP Request Handler
- * 프로그램이다.
- * URL 로 식별되고 HTTP 요청을 처리한다.
- * HTTP 호출에 의해 전송되는 데이터(URL 에 쿼리 스트링으로 코딩되는)를 수신하고 처리한다.
- * 핸들러가 데이터를 처리하고 나면 요청한 사람에게 보낼 응답을 만든다.
+ * 사용자의 요청이 들어오면 handler 는 dispatcher 에게 요청에 맞는 컨트롤러를 반환할 것을 요청하고 반환 받은 컨트롤러를 실행시킨다.
+ *
  */
-public class HttpRequestHandler implements Runnable{
+public class HttpRequestHandler implements Runnable {
 
-    // dispatcher 에게 request 를 주면서 request 에 맞는 응답을 주도록 위임한다.
+    private final Socket socket;
+    private static final DispatcherServlet DISPATCHER_SERVLET = new DispatcherServlet();    // 요청에 맞는 컨트롤러를 반환하므로 객체가 계속 생성될 필요가 없다.
+
+
+    public HttpRequestHandler(Socket connection) {
+        this.socket = connection;
+    }
 
 
     @Override
     public void run() {
         try {
-            ServerSocket serverSocket = new ServerSocket(8080);
-            Socket connection;
+            InputStream inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
 
-            while ((connection = serverSocket.accept()) != null) {
-                InputStream inputStream = connection.getInputStream();
-                // HttpRequest 에게 요청 메세지 처리하는 것을 맡긴다.
-                HttpRequest httpRequest = new HttpRequest(inputStream);
+            HttpRequest httpRequest = new HttpRequest(inputStream);
+            HttpResponse httpResponse = new HttpResponse(outputStream);
 
-                OutputStream outputStream = connection.getOutputStream();
-                // 요청한 사람에게 보낼 응답을 만든다.
-                HttpResponse httpResponse = new HttpResponse(outputStream);
-
-                // FrontController
-                DispatcherServlet dispatcherServlet = new DispatcherServlet(httpRequest);
-                Controller controller = dispatcherServlet.dispatch();
-
-                controller.process(httpRequest, httpResponse);
-            }
+            Controller controller = DISPATCHER_SERVLET.dispatch(httpRequest);
+            controller.process(httpRequest, httpResponse);
 
         } catch (
                 IOException e) {

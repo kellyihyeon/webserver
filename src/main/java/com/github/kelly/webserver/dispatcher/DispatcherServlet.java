@@ -11,15 +11,9 @@ import com.github.kelly.webserver.controller.NotFoundController;
 */
 public class DispatcherServlet {
 
-    private HttpRequest httpRequest;
 
-
-    public DispatcherServlet(HttpRequest httpRequest) {
-        this.httpRequest = httpRequest;
-    }
-
-
-    public Controller dispatch() {
+    public Controller dispatch(HttpRequest httpRequest) {
+        // todo: 매번 새 객체 생성하지 않고 객체 하나만 접근할 수 있도록
         RequestResolverManager resolverManager = new RequestResolverManager(httpRequest);
         Controller controllerOrNull = resolverManager.resolve();
 

@@ -18,7 +18,7 @@ class CookieTest {
         String cookieValue = "cookie-value-12345-abcde";
         String expectedCookie = cookieName + "=" + cookieValue;
 
-        Cookie cookie = new Cookie(CookieTypes.YH_COOKIE, cookieValue);
+        Cookie cookie = new Cookie(CookieTypes.YH_COOKIE.name(), cookieValue);
         String bakedCookie = cookie.createCookie();
 
         assertEquals(expectedCookie, bakedCookie);
@@ -32,7 +32,7 @@ class CookieTest {
         String optionalExpires = "Expires=Tue, 8 Mar 2022 0:0:0 GMT";
         String expectedCookie = cookieName + "=" + cookieValue +"; " + optionalExpires;
 
-        Cookie cookie = new Cookie(CookieTypes.YH_COOKIE, cookieValue);
+        Cookie cookie = new Cookie(CookieTypes.YH_COOKIE.name(), cookieValue);
         cookie.setExpires(LocalDateTime.of(2022, 3, 1, 0, 0, 0).plusDays(7));
         String bakedCookie = cookie.createCookie();
 

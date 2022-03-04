@@ -11,7 +11,7 @@ import com.github.kelly.webserver.controller.NotFoundController;
 */
 public class DispatcherServlet {
 
-    RequestResolverManager resolverManager = new RequestResolverManager();
+    private final RequestResolverManager resolverManager = new RequestResolverManager();
 
 
     public Controller dispatch(HttpRequest httpRequest) {

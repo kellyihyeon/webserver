@@ -5,6 +5,11 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <style>
+  #body-container {
+    background-color: #333;
+    color: white;
+  }
+
   .top {
     margin-top: 100px;
     margin-bottom: 30px;
@@ -20,14 +25,14 @@
     text-align: center;
   }
 </style>
-<body class="w3-black">
+<body id="body-container">
 
 <div class="top">
   <h1>WEB SERVER</h1>
 </div>
 
 <div class="button">
-  <button type="button" class="btn btn-dark" onclick="location.href='/home.html'">Home</button>
+  <button type="button" class="btn btn-secondary" onclick="location.href='/home.html'">Home</button>
   <button type="button" class="btn btn-danger" onclick="location.href='/logout'">Logout</button>
 </div>
 

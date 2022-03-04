@@ -5,14 +5,58 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>HOME SWEET HOME</title>
 </head>
-<body>
-    <h2>
-        <div style="text-align: center;"><b>Home 화면 입니다.</b></div>
-    </h2>
 
-    <div style="text-align: center; margin-top: 20px">안녕하세요! 저는 리다이렉트 된 home 화면이에요.</div>
-    <div style="text-align: center;">Static File 읽기 기능을 구현하셨군요?</div>
-    <div style="text-align: center; margin-bottom: 20px" >축하합니다! 잘하셨어요! :D</div>
+<style>
+    body {
+        background-color: #333;
+        margin: auto;
+        width: 50%;
+    }
+    main {
+        margin-top: 100px;
+    }
+
+    h1 {
+        font-size: 60px;
+        color: white;
+    }
+
+    h5 {
+        margin-top: 15px;
+        color: #bdbdbd;
+        text-align: center;
+        font-style: italic;
+    }
+    h6 {
+        margin-top: 80px;
+        color: white;
+        text-align: center;
+    }
+
+    .btn {
+        margin-top: 30px;
+        color: white;
+    }
+
+    .author {
+        font-size: 18px;
+    }
+
+    .lorem-last {
+        margin-top: 50px;
+    }
+</style>
+<body>
+    <main>
+<!--        <h1>-->
+        <div style="text-align: center;"><h1>Web Server <span class="author">by Kelly</span></h1></div>
+<!--        </h1>-->
+        <h5>
+            "A programming language is for thinking about programs, not for expressing programs you've already thought of. It should be a pencil, not a pen."
+        </h5>
+        <h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In urna dolor, luctus vel ipsum eu, aliquet aliquet neque. Suspendisse mi massa, commodo quis interdum nec, pellentesque id est. Fusce vel euismod elit, vitae molestie lacus. Quisque congue lectus non urna eleifend, vitae faucibus metus pulvinar. Suspendisse potenti. Integer condimentum euismod sodales. Donec ut congue libero. In ut urna in lacus ultricies venenatis vel sit amet quam. Nullam feugiat, velit nec fringilla hendrerit, mi leo sodales nisi, ut scelerisque mauris enim quis eros. Nulla porttitor, neque et vulputate laoreet, lacus elit sagittis massa, eget mollis turpis sapien a leo. Vivamus non accumsan diam. Mauris ac pulvinar ex, nec tempus ex. Proin luctus sit amet orci vitae imperdiet. Aenean laoreet enim massa. Sed iaculis lorem interdum felis vestibulum commodo. Nam suscipit urna risus, ac vehicula odio pulvinar at.</h6>
+        <h6 class="lorem-last">Aenean fermentum urna enim, ut dictum massa volutpat non. Nulla luctus fringilla ultricies. Sed vestibulum finibus turpis, sit amet venenatis velit iaculis sagittis. Cras ut elit mollis, blandit erat a, lacinia tortor. Phasellus semper ornare feugiat. Curabitur ultricies venenatis quam, id gravida eros pretium ac. Sed vestibulum id metus nec accumsan.</h6>
+    </main>
 
     <div style="text-align: center">
         <button type="button" class="btn btn-success" onclick="location.href='signup.html'">회원가입</button>

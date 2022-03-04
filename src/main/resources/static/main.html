@@ -1,28 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <title>Congratulations!</title>
-</head>
-<body>
-<h2>
-  <div style="text-align: center;"><b>Main 화면 입니다.</b></div>
-</h2>
+<html>
+<title>Web Server</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style>
+  .top {
+    margin-top: 100px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 300px;
+  }
 
-<div style="text-align: center; margin-top: 20px">축하합니다! 이곳은 Main 화면 입니다.</div>
-<div style="text-align: center;">로그인에 성공하셨군요?</div>
-<div style="text-align: center; margin-bottom: 20px" >미션이 끝나갑니다. 조금만 힘내주세요 :)</div>
+  .w3-deep-orange {
+    margin-top: 150px;
+  }
 
-<div style="text-align: center">
-  <button type="button" class="btn btn-success" onclick="location.href='/home.html'">Home</button>
-  <button type="submit" class="btn btn-warning" onclick="location.href='/logout'">로그아웃</button>
+  .button {
+    text-align: center;
+  }
+</style>
+<body class="w3-black">
+
+<div class="top">
+  <h1>WEB SERVER</h1>
 </div>
 
+<div class="button">
+  <button type="button" class="btn btn-dark" onclick="location.href='/home.html'">Home</button>
+  <button type="button" class="btn btn-danger" onclick="location.href='/logout'">Logout</button>
+</div>
 
+<div class="w3-container w3-deep-orange w3-large w3-padding-16" style="margin-right:10%">
+  <p><span class="w3-xlarge">DEADLINE</span> is performed in our new theatre in Venezia street.</p>
+</div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<div class="w3-container w3-deep-purple w3-large w3-padding-16" style="margin-left:10%">
+  <p>Take your class to a different and exciting classroom in <span class="w3-xlarge">DEADLINE</span>.</p>
+</div>
+
+<div style="margin-right:10%">
+  <div class="w3-container w3-blue w3-large w3-padding-16">
+    <p><span class="w3-xlarge">DEADLINE</span> is a free offer to schools, teachers and students from 14 years an up.</p>
+  </div>
+</div>
+
 </body>
 </html>

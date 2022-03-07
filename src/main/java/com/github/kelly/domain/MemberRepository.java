@@ -36,5 +36,9 @@ public class MemberRepository { // 싱글톤이어야 한다.
         return (long) memberMap.size();
     }
 
+    public void deleteAll() {
+        memberMap.clear();
+    }
+
 
 }

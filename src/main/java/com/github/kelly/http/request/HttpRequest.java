@@ -1,9 +1,8 @@
 package com.github.kelly.http.request;
 
 import com.github.kelly.http.cookie.Cookie;
-import com.github.kelly.http.cookie.CookieTypes;
+import com.github.kelly.http.cookie.CookieParser;
 import com.github.kelly.http.session.Session;
-import com.github.kelly.http.session.SessionManager;
 import java.io.*;
 import java.util.Map;
 
@@ -27,7 +26,6 @@ public class HttpRequest {
             this.requestLine = new RequestLine(br.readLine());
             this.requestHeaders = new RequestHeaders(br);
             this.cookies = parseCookie();
-
             this.requestBody = new RequestBody(br, requestHeaders);
 
         } catch (IOException e) {
@@ -74,27 +72,12 @@ public class HttpRequest {
         return requestHeaders;
     }
 
-    // request 에 쿠키와 세션을 두고 꺼내자. (CookieParser.parseCookie())
+
     private Cookie[] parseCookie() {
-        // 쿠키 밸류 가져오기
-        String rawValue = requestHeaders.getHeader("Cookie");
-        Cookie[] allCookies = null;
-
-        String[] cookieKeys = rawValue.split(";");
-        allCookies = new Cookie[cookieKeys.length];    // 초기화
-
-        for (int i = 0; i < cookieKeys.length; i++) {
-            System.out.println("cookieKey = " + cookieKeys[i]);
-            String cookieName = cookieKeys[i].split("=")[0].trim();     //j_session, YH_COOKIE ... httpOnly 는?
-            String cookieValue = cookieKeys[i].split("=")[1].trim();
-            allCookies[i] = new Cookie(cookieName, cookieValue);
-            System.out.println("allCookies = " + allCookies[i]);
-        }
-
-        return allCookies;
+        return CookieParser.parseCookies(requestHeaders.getHeader("Cookie"));
     }
 
-    // YH_COOKIE
+
     public Cookie getCustomCookie(String cookieName) {
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(cookieName)) {
@@ -104,7 +87,7 @@ public class HttpRequest {
         return null;
     }
 
-    // 왜 만들었다가 안썼지?
+
 //    public Session getSessionFromRequestHeaders() {
 //        Cookie yhCookie = getCustomCookie(CookieTypes.YH_COOKIE.toString());
 //        String value = yhCookie.getValue();

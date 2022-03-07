@@ -1,27 +1,23 @@
 package com.github.kelly.http.cookie;
 
-import com.github.kelly.http.request.HttpRequest;
-
 public class CookieParser {
 
 
-    public static String parseYhCookie(HttpRequest httpRequest) {
-        String rawValue = httpRequest.getRequestHeaders().getHeader("Cookie");
-        String value = null;
+    public static Cookie[] parseCookies(String rawCookieValue) {
+        Cookie[] allCookies = null;
+        if (rawCookieValue != null) {
+            String[] cookies = rawCookieValue.split(";");
+            allCookies = new Cookie[cookies.length];
 
-        if (rawValue.contains(";")) {
-            String[] cookieKeys = rawValue.split(";");
-            for (String cookieKey : cookieKeys) {
-                System.out.println("cookieKey = " + cookieKey);
-                String cookieName = cookieKey.split("=")[0].trim();
-                String cookieValue = cookieKey.split("=")[1].trim();
-                if (cookieName.equals("YH_COOKIE")) {
-                    value = cookieValue;
-                }
+            for (int i = 0; i < allCookies.length; i++) {
+                System.out.println("cookie = " + cookies[i]);
+                String cookieName = cookies[i].split("=")[0].trim();
+                String cookieValue = cookies[i].split("=")[1].trim();
+                allCookies[i] = new Cookie(cookieName, cookieValue);
+                System.out.println("CookieParser.parseCookie - value = " + cookieValue);
             }
         }
 
-        System.out.println("CookieParser.parseCookie - value = " + value);
-        return value;
+        return allCookies;
     }
 }

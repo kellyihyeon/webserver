@@ -30,6 +30,7 @@ public class SessionManager {
     // 생명주기: 로그인 ~ 로그아웃
     private Session parseSession(HttpRequest request, HttpResponse response) {
         Cookie remainCookie = request.getCustomCookie(CookieTypes.YH_COOKIE.name());
+        System.out.println("remainCookie = " + remainCookie);
         if (remainCookie != null) {
             String valueFromRemainCookie = remainCookie.getValue();
             Session remainSession = sessionMap.get(valueFromRemainCookie);

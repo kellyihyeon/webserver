@@ -79,9 +79,11 @@ public class HttpRequest {
 
 
     public Cookie getCustomCookie(String cookieName) {
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(cookieName)) {
-                return cookie;
+        if (cookies != null) {  // 스토리지에서 cookie 를 다 날려버린 경우
+            for (Cookie cookie : cookies) {     // Null
+                if (cookie.getName().equals(cookieName)) {
+                    return cookie;
+                }
             }
         }
         return null;

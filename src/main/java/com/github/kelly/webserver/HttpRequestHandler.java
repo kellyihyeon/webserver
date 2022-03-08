@@ -17,7 +17,7 @@ import java.net.Socket;
 public class HttpRequestHandler implements Runnable {
 
     private final Socket socket;
-    private static final DispatcherServlet DISPATCHER_SERVLET = new DispatcherServlet();    // 요청에 맞는 컨트롤러를 반환하므로 객체가 계속 생성될 필요가 없다.
+    private static final DispatcherServlet DISPATCHER_SERVLET = new DispatcherServlet();
 
 
     public HttpRequestHandler(Socket connection) {

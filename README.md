@@ -124,7 +124,7 @@
       서버 -> 웹브라우저로 데이터 보내서 파싱 가능한지?
 - [ ] Cookie   
       Optional 설정 추가 (만료일 · 지속시간, 특정 도메인 및 경로 제한 설정)
-- [ ] 스레드 풀: 고정 스레드풀 -> 코어, 맥시멈, 대기시간, 큐 설정
+- [x] 스레드 풀: 고정 스레드풀 -> 코어, 맥시멈, 대기시간, 큐 설정
 - [ ] Composite pattern 이해하고 리팩토링 해보기
 - [ ] Trouble Shooting 2번, 3번 해결하고 기록하기
 <br>
@@ -175,6 +175,8 @@
 - https://www.javatpoint.com/java-threadlocal-class
 - https://www.javatpoint.com/java-thread-pool
 - https://levelup.gitconnected.com/lets-learn-java-threads-e156481883cb
+- https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadPoolExecutor.html
+- https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/LinkedBlockingQueue.html
 
 ### **ETC**
 - https://www.srihash.org/

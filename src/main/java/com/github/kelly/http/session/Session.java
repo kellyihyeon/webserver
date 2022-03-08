@@ -2,7 +2,6 @@ package com.github.kelly.http.session;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class Session {
 
@@ -36,19 +35,4 @@ public class Session {
         attributeMap.clear();
     }
 
-    /**
-     * Session Id 가 일치하면 동일성 인정 -> 삭제
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Session session = (Session) o;
-        return Objects.equals(id, session.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

@@ -54,7 +54,7 @@ public class SessionManager {
      */
     private Session createSession(HttpResponse response) {
         String sessionId = UUID.randomUUID().toString();
-        sessionMap.put(sessionId, new Session(sessionId));  // 동일성 구현 - equals and hashCode
+        sessionMap.put(sessionId, new Session(sessionId));
 
         Cookie cookie = new Cookie(CookieTypes.YH_COOKIE.name(), sessionId);
         cookie.setExpires(LocalDateTime.now().plusDays(7));

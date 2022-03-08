@@ -45,9 +45,9 @@ class UserDefinedRequestResolverTest {
         HttpRequest wrongRequest = getWrongRequest(requestLine);
 
         UserDefinedRequestResolver userDefinedRequestResolver = new UserDefinedRequestResolver();
-        Controller maybeNull = userDefinedRequestResolver.resolve(httpRequest);
+        Controller maybeNull = userDefinedRequestResolver.resolve(wrongRequest);
 
-        assertThrows(NullPointerException.class, () -> maybeNull.getClass());
+        assertNull(maybeNull);
     }
 
 

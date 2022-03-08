@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class StaticFileController implements Controller {
 
-    public static final String DIRECTORY = "static";
+    private static final String DIRECTORY = "static";
     private static final Map<String, String> mimeTypeMap = new HashMap<>();
 
     static {

@@ -11,7 +11,7 @@ import java.io.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("DispatcherServlet 객체 생성 테스트")
-@Disabled("코드 수정으로 인해 테스트 코드 다시 짜야함")
+//@Disabled("코드 수정으로 인해 테스트 코드 다시 짜야함")
 class DispatcherServletTest {
 
     @ParameterizedTest

@@ -2,6 +2,7 @@ package com.github.kelly.webserver.dispatcher;
 
 import com.github.kelly.http.request.HttpRequest;
 import com.github.kelly.controller.Controller;
+import com.github.kelly.webserver.controller.NotFoundController;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public class RequestResolverManager implements RequestResolver {
 
     private final List<RequestResolver> resolvers = new ArrayList<>();
+    private static final NotFoundController NOT_FOUND_CONTROLLER = new NotFoundController();
 
 
     public RequestResolverManager() {
@@ -41,6 +43,6 @@ public class RequestResolverManager implements RequestResolver {
                 }
             }
         }
-        return null;       // 어떤 리졸버도 해당 컨트롤러를 가지고 있지 않다.
+        return NOT_FOUND_CONTROLLER;       // 어떤 리졸버도 해당 컨트롤러를 가지고 있지 않다.
     }
 }

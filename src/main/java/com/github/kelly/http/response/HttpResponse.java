@@ -28,7 +28,6 @@ public class HttpResponse {
     }
 
     public void addHeader(String key, String value) {
-        // controller 에서 Content-Type, Content-Length 담을 때
         responseHeaderMap.put(key, value);
     }
 
@@ -65,7 +64,6 @@ public class HttpResponse {
             dos.writeBytes(String.format("%s: %s\r\n", "Location", location));
             dos.writeBytes("\r\n");
 
-//            addOptionalBody(bodyMessage);
             dos.flush();
         } catch (IOException e) {
             e.printStackTrace();

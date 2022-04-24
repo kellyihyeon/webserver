@@ -18,7 +18,7 @@ public class DispatcherServlet {
         Controller controllerOrNull = resolverManager.resolve(httpRequest);
 
         if (controllerOrNull == null) {
-            return new NotFoundController();    // todo: 매번 새 객체 생성하지 않고 객체 하나만 접근할 수 있도록
+            return new NotFoundController();
         }
 
         return controllerOrNull;

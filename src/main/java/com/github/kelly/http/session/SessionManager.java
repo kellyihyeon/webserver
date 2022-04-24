@@ -42,9 +42,6 @@ public class SessionManager {
         return createSession(response);
     }
 
-//    public Session getSessionInRequest(String sessionId) {
-//        return sessionMap.get(sessionId);
-//    }
 
     /**
      * 세션을 만들어준다.

@@ -27,7 +27,7 @@ class RequestBodyTest {
         InputStreamReader reader = new InputStreamReader(new ByteArrayInputStream(requestHeaders.getBytes()));
         BufferedReader bufferedReader = new BufferedReader(reader);
         RequestHeaders headers = new RequestHeaders(bufferedReader);
-        getHeaders(headers);    // -> 이렇게 해도 되나?
+        getHeaders(headers);
     }
 
     @Test

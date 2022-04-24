@@ -17,8 +17,7 @@ public class QueryString {
     }
 
     private void createQueryStringMap() {
-        if (queryStringOrNull != null) {    // board = 3 & username=pipi
-            // void accept(T t);
+        if (queryStringOrNull != null) {
             Arrays.stream(queryStringOrNull.split("&"))
                     .forEach(keyAndValueString -> {
                         String[] keyAndValueComponents = keyAndValueString.split("=");
@@ -28,7 +27,6 @@ public class QueryString {
     }
 
     private String parseQueryString(String rawUrl) {
-        // /welcome?board=3&username=pipi  or /welcome
         if (rawUrl.contains("?")) {
             return rawUrl.split("\\?")[1];
         }

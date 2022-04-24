@@ -3,12 +3,13 @@ package com.github.kelly.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MemberRepository { // 싱글톤이어야 한다.
+public class MemberRepository {
 
     private static final Map<Long, Member> memberMap = new HashMap<>();
     private static final MemberRepository memberRepository = new MemberRepository();
 
     private MemberRepository() {
+        // 싱글톤
     }
 
     public static MemberRepository getInstance() {

@@ -24,11 +24,9 @@ class SessionManagerTest {
         Session session = SessionManager.getSession(httpRequest, httpResponse);
         String id = session.getId();
         SessionManager.removeSession(id);
-        System.out.println("session id = " + id);
 
         HttpRequest newHttpRequest = getNewHttpRequest(id);
         Session newSession = SessionManager.getSession(newHttpRequest, httpResponse);
-        System.out.println("session id 를 이용해 만든 newSession 의 id = " + newSession.getId());
 
         assertNotEquals(session, newSession);
     }

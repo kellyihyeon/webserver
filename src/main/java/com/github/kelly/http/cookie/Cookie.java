@@ -4,10 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-/**
- * httpResponse.addHeader("Set-Cookie", "yh-cookie=choco-mint");
- * Optional: Expires, Max-Age, Domain, Path, Secure, HttpOnly,
- */
+
 public class Cookie {
 
     private final String name;
@@ -18,7 +15,7 @@ public class Cookie {
     private String maxAge;
 
 
-    // *** test code error
+
     public Cookie(String name, String value) {
         this.name = name;
         this.value = value;
@@ -46,7 +43,7 @@ public class Cookie {
     public String createCookie() {
         StringBuilder attributes = new StringBuilder();
         StringBuilder cookie = attributes.append(name).append("=").append(value);
-        // "yh-cookie=choco-mint"
+
         if (expires != null) {
             cookie.append("; ").append(expires);
         }

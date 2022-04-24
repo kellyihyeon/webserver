@@ -16,7 +16,6 @@ public class HttpRequest {
     private RequestBody requestBody;
 
     private Cookie[] cookies;
-    private Session session;        //
 
 
     public HttpRequest(InputStream inputStream) {
@@ -49,7 +48,7 @@ public class HttpRequest {
         return requestLine.getHttpMethod();
     }
 
-    // query string map, request body(optional) map -> get,post.. 등 메소드로 요청했을 때 map 에서 value 를 꺼내준다.
+
     public Map<String, String> getQueryStringMap() {
         if (requestLine.getQueryString() != null) {
             return requestLine.getQueryString().getQueryStringMap();
@@ -57,7 +56,7 @@ public class HttpRequest {
         return null;
     }
 
-    // 각 controller 에서 parameter value 꺼낼 때
+
     public String getParameter(String key) {
         String parameterValue = requestLine.getParameterValue(key);
         if (parameterValue != null) {
@@ -79,8 +78,9 @@ public class HttpRequest {
 
 
     public Cookie getCustomCookie(String cookieName) {
-        if (cookies != null) {  // 스토리지에서 cookie 를 다 날려버린 경우
-            for (Cookie cookie : cookies) {     // Null
+        // 스토리지에서 cookie 를 다 날려버린 경우
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(cookieName)) {
                     return cookie;
                 }
@@ -89,12 +89,4 @@ public class HttpRequest {
         return null;
     }
 
-
-//    public Session getSessionFromRequestHeaders() {
-//        Cookie yhCookie = getCustomCookie(CookieTypes.YH_COOKIE.toString());
-//        String value = yhCookie.getValue();
-//
-//        SessionManager sessionManager = SessionManager.getInstance();
-//        return sessionManager.getSessionInRequest(value);
-//    }
 }

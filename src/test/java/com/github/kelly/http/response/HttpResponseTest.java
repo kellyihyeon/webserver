@@ -1,5 +1,6 @@
 package com.github.kelly.http.response;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
@@ -10,7 +11,7 @@ class HttpResponseTest {
 
     @Test
     @DisplayName("OutputStream 을 생성자로 넘기면 객체가 생성된다.")
-//    @Disabled("증명을 어떻게 하지..?")
+    @Disabled("증명을 어떻게 하지..?")
     void HttpResponse_객체_생성_테스트() {
         OutputStream outputStream = new ByteArrayOutputStream();
         HttpResponse httpResponse = new HttpResponse(outputStream);

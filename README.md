@@ -1,183 +1,147 @@
 <div align="center">
 
-<h1>🔨 <b>밑바닥부터 구현하는 웹서버 (ver.TDD)</b> 🔨 </h1>
+<h1><b>HTTP Web Server</b> </h1>
 
-<b>웹서버의 내부 동작 원리가 궁금하다면 직접 만들어보자.</b>
-
-<h6>"A programming language is for thinking about programs, not for expressing programs you've already thought of. It should be a pencil, not a pen."</h6>
+![web-server](https://user-images.githubusercontent.com/73330352/164957623-d6935f1d-171d-4894-9c9f-2afdbbf710fb.png)
 
 </div>
 
 <br>
 <br>
 
-## **[ CONTENT ]**
+## **🚀 프로젝트 소개**
+- 웹 서버가 어떻게 동작을 하는지 이해하기 위해서 밑바닥부터 직접 스펙을 구현해보았습니다.
+- 구현한 웹 서버를 이용해 세션방식의 로그인 기능을 만들어보았습니다.
+- 구현 프로세스와 코드가 리팩토링 되는 과정을 기록하였습니다.
+  - 👉🏼 https://github.com/kellykang-tech/webserver/blob/main/PROCESS.md
 
-### **파일 읽고 쓰기**
-- 자바 API 이용하기
-- text 파일 읽고 쓰기
-- 이미지 파일 읽고 쓰기
+- 개발 기간
+  - 2022.02.02 ~ 현재 (구현은 완료, 리팩토링 진행 중)
+- JDK 1.8, JUnit5
+<br>
 <br>
 
-### **네트워크**
-- 자바 서버 소켓으로 통신하기
-- 스트림 가져오기
-- 웹 브라우저에 text 내보내기
-<br>
+## **🚀 개발 내용**
+- 자바 서버 소켓을 활용한 서버 통신
+  - 클라이언트와 서버의 통신을 위해 자바 ServerSocket 사용
 
-### **HTTP (RFC 2616)**
-- 웹 브라우저의 요청 데이터 읽기
+- RFC 2616 스펙을 만족하는 HTTP request parser
+  - HTTP Request Message 스펙에 맞춰 클라이언트의 요청을 parsing
 
-- 읽어온 요청 데이터 파싱하기
-  - request 구현
-    - request line
-    - request headers
-    - request body (YAGNI)
-
-- `쓰레드` 개념과 이해
-
-- response 구현
-  - status line
-  - response headers
-
-- 웹 브라우저의 요청이 POST 일 때
-  - post 요청으로 보낸 데이터는 어디에 있을까?
-  - post 요청 할 뷰 만들기 
-  - HttpRequest 에서는 이 요청을 어떻게 처리할 것인가?
-
-- 클라이언트가 get 요청으로 데이터를 보낸다면?
-  - 이 데이터를 어떻게 가져올 것인가?
-<br>
-
-### **Web Server**
-- 요청 handler 구현
-  - HTTP Request Handler 정의 참고  
-  ```text
-  프로그램이다.  
-  URL 로 식별되고 HTTP 요청을 처리한다.  
-  HTTP 호출에 의해 전송되는 데이터(URL 에 쿼리 스트링으로 코딩되는)를 수신하고 처리한다.  
-  핸들러가 데이터를 처리하고 나면 요청한 사람에게 보낼 응답을 만든다.  
-  ```
-  - 소켓
-  - 스트림
-
-- Dispatcher 구현
-  - Front Controller:  
-    A controller that handles all requests for a web site
-  - v0. happy path:  
-    - 클라이언트의 요청에 대한 서버의 적절한 응답을 매핑해주는 역할을 하는 객체에 요청에 대한 응답 컨트롤러를 반환할 것을 요청
-    - 요청 handler에 컨트롤러 반환
-
-- 편의성을 위해 만드는 객체
-  - 클라이언트가 스태틱 파일을 요청한다면?
+- RFC 2616 스펙을 만족하는 HTTP response builder
+  - HTTP Response Message 스펙에 맞춰 response 구조 빌딩
   
-  - 클라이언트의 '/welcome' 요청에 대해 static 파일을 응답해주고 싶다면?
+- 스레드 풀을 활용한 다중 요청 처리
+  - 클라이언트의 다중 요청을 처리하기 위해 멀티 스레드 사용
+  - 스레드를 관리하기 위해 스레드 풀 생성
+
+- 세션 처리를 위한 쿠키 구현
+  - 클라이언트를 식별하고 그 상태를 유지 하기 위해 세션과 쿠키를 구현
+  - SessionManager를 생성하고, SessionManager가 세션의 라이프 사이클을 관리하도록 함
+
+- 직접 구현한 웹 서버로 세션 방식 로그인 구현
+  - 사용자가 로그인 했을 때 세션을 부여하고, 다음 요청 시 쿠키의 세션 id를 확인해 같은 사용자가 맞는지 확인
   
-  - v1. staticFile 요청 (/home.html)    
-      - 스태틱 파일 서빙하는 객체  
-  - v2. 리소스 요청 (/welcome)  
-      - 사용자 정의 컨트롤러 반환하는 객체
+- 웹 서버 사용 편의성을 위한 부가기능 제공
+  - 스프링의 DispatcherServlet처럼 Front Controller 패턴을 활용한 DispatcherServlet 생성
+  - 사용자 정의 컨트롤러
+  - 스태틱 파일을 서빙해주는 컨트롤러
+  - 잘못된 경로에 대한 처리를 하는 컨트롤러
 
-  - FileReadUtil 객체 하나 만들어서 파일 읽어오기
+- 기능 검증을 위한 단위 테스트 작성
+  - domain layer, service layer 메소드의 기능 검증을 위해 단위 테스트 작성
 
-- 요청 Resolver를 통합해서 적절한 Resolver를 반환해주는 객체 필요
-<br>  
-
-### **간단한 서비스 만들기**
-- user A가 요청을 보낸다면 서버에서는 user A를 어떻게 다른 사용자와 구별할 수 있을까?
-<br>
-
-### **Stateful**
-- 쿠키 만들기
-  - 쿠키가 무엇인지?
-  - 쿠키는 어디에?  
-  ```text
-  request headers.
-  Idea-sample=d1e23a4b-c5bb-67s8-94a4-asdfasdf342
-  ```
-  
-- 세션 만들기
-  - 세션이 무엇인지?
 <br>
 <br>
 
-## **[ 핵심 ]**
-- HTTP 스펙을 만족하는 서버를 만들자.
-- HTTP 요청 분석
-- HTTP 응답
-- 세션
-- 다중 요청 처리 
-  - 멀티스레드
+## **🚀 프로젝트 주요 관심사**
+- HTTP 스펙을 만족하는 서버 구현하기
+- HTTP RFC 2616 요청 스펙에 맞춰서 요청 객체 만들기
+- HTTP RFC 2616 응답 스펙에 맞춰서 응답 객체 만들기
+- 세션과 세션 처리를 위한 세션 매니져
+- 다중 요청 처리 관련해서 공부해야 할 개념
+  - 멀티 스레드
   - 스레드 풀
-  - 스레드 로컬
+- service layer 단위 테스트 코드 작성하기
+
 <br>
 <br>
 
-## **[ TO DO ]**
-- [ ] 깨진 테스트 코드 수정
-- [ ] 트러블 슈팅 - favicon 해결
-- [x] README 정리
-- [ ] 컨텍스트로 묶어보기
-- [ ] 스레드 로컬 이해하고, 적용해보기
-- [ ] NotFoundController를 매번 생성해서 내려주는 부분 리팩토링
-- [ ] StaticFileController   
-      서버 -> 웹브라우저로 데이터 보내서 파싱 가능한지?
-- [ ] Cookie   
-      Optional 설정 추가 (만료일 · 지속시간, 특정 도메인 및 경로 제한 설정)
-- [x] 스레드 풀: 고정 스레드풀 -> 코어, 맥시멈, 대기시간, 큐 설정
-- [ ] Composite pattern 이해하고 리팩토링 해보기
-- [ ] Trouble Shooting 2번, 3번 해결하고 기록하기
-<br>
-<br>
+## **🚀 프로젝트 디렉토리 구조**
+🟢interface 🔵class
+```
+📁src
+    📁main
+        📁java
+            📁com.github.kelly
+                📁controller
+                    🟢Controller
+                    🔵LoginContoller
+                    🔵LogOutController
+                    🔵SignUpController
+                    🔵WelcomeController
+                📁domain
+                    🔵Member
+                    🔵MemberRepository
+                📁http
+                    📁cookie
+                        🔵Cookie
+                        🔵CookieParser
+                        🔵CookieTypes
+                    📁request
+                        🔵HttpMethod
+                        🔵HttpRequest
+                        🔵QueryString
+                        🔵RequestBody
+                        🔵RequestHeaders
+                        🔵RequestLine
+                    📁response
+                        🔵HttpResponse
+                        🔵HttpStatus
+                    📁session
+                        🔵Session
+                        🔵SessionManager
+                📁utils
+                    🔵FileReadUtil
+                📁webserver
+                    📁controller
+                        🔵NotFoundController
+                        🔵StaticFileController
+                    📁dispatcher
+                        🔵DispatcherServlet
+                        🔵RequestKey
+                        🟢RequestResolver
+                        🔵RequestResolverManager
+                        🔵StaticFileRequestResolver
+                        🔵UserDefinedRequestResolver
+                    🔵HttpRequestHandler
+                    🔵Webserver
+                🔵Application
 
-## **[ Learning Target ]**
-1. Junit을 이용해 **단위 테스트**하기
-2. **리팩토링** 하기
-3. **TDD** 기반으로 프로그래밍 하기 (⭐최종 목표)
-<br>
-<br>
-
-
-## **[ Troubleshooting ]**
-- [1. URL에 쿼리 스트링이 없을 때](https://github.com/kellykang-tech/Troubleshooting/blob/main/URL%EC%97%90-%EC%BF%BC%EB%A6%AC%EC%8A%A4%ED%8A%B8%EB%A7%81%EC%9D%B4-%EC%97%86%EC%9D%84-%EB%95%8C-NullPointerException.md)
-- [2. 요청이 왜 무시되지?]()
-- [3. 매번 객체를 새로 생성할 필요가 없는데 어떻게 리팩토링 하지?]()
-<br>
-<br>
-
-
-## **[ Reference ]**
-### **HTTP**
-- https://developer.mozilla.org/ko/docs/Web/HTTP/Messages
-- https://developer.mozilla.org/ko/docs/Web/HTTP/Status
-- https://developer.mozilla.org/ko/docs/Web/HTTP/Redirections
-- https://developer.mozilla.org/ko/docs/Web/HTTP/Basics_of_HTTP/MIME_types
-- https://developer.mozilla.org/ko/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
-- https://datatracker.ietf.org/doc/html/rfc2616
-
-### **Cookie**
-- https://developer.mozilla.org/ko/docs/Web/HTTP/Cookies
-- https://developer.mozilla.org/ko/docs/Web/HTTP/Headers/Set-Cookie
-- https://docs.oracle.com/javaee/7/api/javax/servlet/http/Cookie.html
-- https://developer.mozilla.org/ko/docs/Web/HTTP/Headers/Set-Cookie#permanent_cookie
-- https://docs.oracle.com/javaee/7/api/javax/servlet/http/Cookie.html
-- https://datatracker.ietf.org/doc/html/rfc6265
-
-### **Session**
-- https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html
-
-### **Web Server**
-- http://thierryroussel.free.fr/java/books/martinfowler/www.martinfowler.com/isa/frontController.html
-- https://en.wikipedia.org/wiki/URL_redirection
-
-
-### **Thread**
-- https://www.javatpoint.com/java-threadlocal-class
-- https://www.javatpoint.com/java-thread-pool
-- https://levelup.gitconnected.com/lets-learn-java-threads-e156481883cb
-- https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadPoolExecutor.html
-- https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/LinkedBlockingQueue.html
-
-### **ETC**
-- https://www.srihash.org/
-- https://ko.wikipedia.org/wiki%EC%BB%B4%ED%8F%AC%EC%A7%80%ED%8A%B8_%ED%8C%A8%ED%84%B4
+    📁test
+        📁java
+            📁com.github.kelly
+                📁domain
+                    🔵MemberRepositoryTest
+                    🔵MemberTest
+                📁http
+                    📁cookie
+                        🔵CookieParserTest
+                        🔵CookieTest
+                    📁request
+                        🔵HttpRequestTest
+                        🔵QueryStringTest
+                        🔵RequestBodyTest
+                        🔵RequestHeadersTest
+                        🔵ReuqestLineTest
+                    📁response
+                        🔵HttpResponseTest
+                    📁session
+                        🔵SessionManagerTest
+                        🔵SessionTest
+                    📁webserver.dispatcher
+                        🔵DispatcherServletTest
+                        🔵RequestResolverManagerTest
+                        🔵StaticFileRequestResolverTest
+                        🔵UserDefinedRequestResolverTest
+```

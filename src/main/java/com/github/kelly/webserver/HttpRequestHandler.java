@@ -28,6 +28,8 @@ public class HttpRequestHandler implements Runnable {
     @Override
     public void run() {
         try {
+            System.out.printf("HttpRequestHandler.run - [%s]\n", Thread.currentThread().getName());
+
             InputStream inputStream = socket.getInputStream();
             OutputStream outputStream = socket.getOutputStream();
 
@@ -42,6 +44,5 @@ public class HttpRequestHandler implements Runnable {
             e.printStackTrace();
         }
 
-        System.out.println("HttpRequestHandler.run = " + Thread.currentThread().getName());
     }
 }

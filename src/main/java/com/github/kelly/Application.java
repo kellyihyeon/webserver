@@ -1,23 +1,25 @@
 package com.github.kelly;
 
-import com.github.kelly.webserver.EventLoop;
-import com.github.kelly.webserver.EventLoopTaskHandler;
 import com.github.kelly.webserver.Webserver;
+import com.github.kelly.webserver.eventloop.EventLoop;
 
 /**
- * Application 의 main thread 는 web server 를 구동시킨다.
+ *  single thread             event queue
+ *                          task1 task2 task3      thread1, thread2...
+ *          event loop <->
+ *      (thread pool- assign task to thread.)
  */
 public class Application {
 
     public static void main(String[] args) {
+
+        // event loop 실행 스레드
+        new Thread(() ->
+                EventLoop.getInstance().run()).start();
+
+        // 요청 받는 스레드 (single thread - like node js)
         Webserver webserver = new Webserver();
         new Thread(webserver).start();
-
-        // 이 코드는 실행 되지 않음
-//        Thread threadForEventLoopTaskHandler = new Thread(EventLoopTaskHandler.getInstance());
-//        while (!EventLoop.getInstance().getQueue().isEmpty()) {
-//            threadForEventLoopTaskHandler.start();
-//        }
 
         System.out.println("Application.main = " + Thread.currentThread().getName());
     }

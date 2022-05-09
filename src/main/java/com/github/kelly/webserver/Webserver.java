@@ -21,8 +21,7 @@ public class Webserver implements Runnable{
                 Event event = new Event(connection);
                 EventQueue.getInstance().insertToEvent(event);
 
-
-                System.out.println("Webserver.run = " + Thread.currentThread().getName());
+                System.out.printf("Webserver.run - [%s]\n", Thread.currentThread().getName());
             }
 
         } catch (IOException e) {

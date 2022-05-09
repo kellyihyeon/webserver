@@ -2,7 +2,6 @@ package com.github.kelly.http.request;
 
 import com.github.kelly.http.cookie.Cookie;
 import com.github.kelly.http.cookie.CookieParser;
-import com.github.kelly.http.session.Session;
 import java.io.*;
 import java.util.Map;
 

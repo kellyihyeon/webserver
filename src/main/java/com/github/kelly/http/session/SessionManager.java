@@ -21,7 +21,7 @@ public class SessionManager {
     }
 
 
-    public static Session getSession(HttpRequest request, HttpResponse response) {
+   public static Session getSession(HttpRequest request, HttpResponse response) {
         return sessionManager.parseSession(request, response);
     }
 

@@ -31,9 +31,11 @@ public class LogInController implements Controller {
                 httpResponse.redirect("/main.html");
             } else {
                 System.out.println("비밀번호가 일치하지 않습니다.");
+                httpResponse.redirect("/login.html");
             }
         } else {
             System.out.println("존재하지 않는 아이디 입니다.");
+            httpResponse.redirect("/login.html");
         }
 
     }

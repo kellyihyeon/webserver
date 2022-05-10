@@ -28,7 +28,7 @@ public class EventLoop {
     public void processEvent() {
         Event event;
         if ((event = EventQueue.getInstance().getEvent()) != null) {
-            System.out.printf("EventLoop.run - [%s]\n", Thread.currentThread().getName());
+            System.out.printf("EventLoop.run - [%s] - working. \n", Thread.currentThread().getName());
             HttpRequestHandler httpRequestHandler = new HttpRequestHandler(event.getConnection());
             threadPoolExecutor.execute(httpRequestHandler);
         }
